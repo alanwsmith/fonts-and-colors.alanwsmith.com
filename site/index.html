@@ -130,7 +130,12 @@
           }
           if (updateValue) {
             if (idParts[1] === 'background') {
-              document.body.style.background = baseValue
+              document.body.style.background = updateValue
+            } else if (idParts[1] === 'header') {
+              const headers = document.getElementsByTagName('h1')
+              for (const header of headers) {
+                header.style.color = updateValue
+              }
             }
           }
           changeInProgress = false
@@ -173,19 +178,26 @@
     <main>
       <h1>Fonts And Colors</h1>
       <div id="color-pickers">
-        <label for="css--background--string">Background Color:</label>
-        <input
-          type="text"
-          id="css--background--string"
-          size="7"
-          value="#232946"
-        />
-        <input type="color" id="css--background--picker" value="#232946" />
-      </div>
-
-      <div>
-        <label for="css-header-color">Header</label>
-        <input type="color" id="css-header-color" size="7" />
+        <div>
+          <label for="css--background--string">Background Color:</label>
+          <input
+            type="text"
+            id="css--background--string"
+            size="7"
+            value="#232946"
+          />
+          <input type="color" id="css--background--picker" value="#232946" />
+        </div>
+        <div>
+          <label for="css--header--string">Header Color:</label>
+          <input
+            type="text"
+            id="css--header--string"
+            size="7"
+            value="#fffffe"
+          />
+          <input type="color" id="css--header--picker" value="#fffffe" />
+        </div>
       </div>
 
       <h3>TODO:</h3>

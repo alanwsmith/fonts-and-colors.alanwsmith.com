@@ -61,18 +61,18 @@
         padding-top: 18px;
         padding-bottom: 4px;
         width: 100%;
-        max-width: 72ch;
+        max-width: 76ch;
         margin: 0 auto;
         border-bottom: 1px solid #888;
       }
       main {
         width: 100%;
-        max-width: 72ch;
+        max-width: 76ch;
         margin: 0 auto;
       }
       footer {
         width: 100%;
-        max-width: 72ch;
+        max-width: 76ch;
         margin: 0 auto;
         text-align: center;
         margin-top: 60px;
@@ -82,8 +82,86 @@
     </style>
 
     <script type="text/javascript">
-      function kickoff() {}
-      document.addEventListener('DOMContentLoaded', kickoff)
+      function updateBackgroundColorText(event) {
+        console.log(event)
+        const color = scrubColor(event.target.value)
+        if (color) {
+          document.body.style.background = `#${color}`
+        }
+      }
+
+      function updateBackgroundColorPicker(event) {
+        const color = scrubColor(event.target.value)
+        if (color) {
+          document.body.style.background = `#${color}`
+        }
+      }
+
+      function scrubColor(unscrubbedColor) {
+        const scrubbedColor = unscrubbedColor
+          .toLowerCase()
+          .replace(/^#/, '')
+          .replaceAll(/[^a-f0-9]/g, '')
+        return scrubbedColor.length === 6 ? scrubbedColor : null
+      }
+
+      let changeInProgress = false
+
+      const handleColorChange = (event) => {
+        if (!changeInProgress) {
+          changeInProgress = true
+          let baseValue = event.target.value.toLowerCase()
+          let updateValue = null
+          const idParts = event.target.id.split('--')
+          if (idParts[2] === 'picker') {
+            updateValue = baseValue
+            document.getElementById(`css--${idParts[1]}--string`).value =
+              updateValue
+          } else {
+            const checkValue = baseValue
+              .replace(/^#/, '')
+              .replaceAll(/[^a-f0-9]/g, '')
+            if (checkValue.length === 6) {
+              updateValue = `#${checkValue}`
+              console.log(updateValue)
+              document.getElementById(`css--${idParts[1]}--picker`).value =
+                updateValue
+            }
+          }
+          if (updateValue) {
+            if (idParts[1] === 'background') {
+              document.body.style.background = baseValue
+            }
+          }
+          changeInProgress = false
+        }
+      }
+
+      function engage() {
+        document
+          .getElementById('color-pickers')
+          .addEventListener('input', handleColorChange)
+
+        /*
+
+        document
+          .getElementById('css-background-color-text')
+          .addEventListener('input', updateBackgroundColorText)
+        document
+          .getElementById('css-background-color-picker')
+          .addEventListener('input', updateBackgroundColorPicker)
+
+          /(event) => {
+
+            <!-- console.log(code) -->
+            <!-- if (code.length === 6) { -->
+            <!--   console.log('change') -->
+            <!--   document.body.style.background = `#${code}` -->
+            <!-- } -->
+          }
+            */
+      }
+      document.addEventListener('DOMContentLoaded', engage)
     </script>
   </head>
   <body>
@@ -94,6 +172,28 @@
     </header>
     <main>
       <h1>Fonts And Colors</h1>
+      <div id="color-pickers">
+        <label for="css--background--string">Background Color:</label>
+        <input
+          type="text"
+          id="css--background--string"
+          size="7"
+          value="#232946"
+        />
+        <input type="color" id="css--background--picker" value="#232946" />
+      </div>
+
+      <div>
+        <label for="css-header-color">Header</label>
+        <input type="color" id="css-header-color" size="7" />
+      </div>
+
+      <h3>TODO:</h3>
+      <ul>
+        <li>Put stuff in local storage so it's there when you come back</li>
+        <li>See how the color picker works in different browsers</li>
+        <li>Print out a stylesheet with the values</li>
+      </ul>
     </main>
     <footer>
       made by <a href="https://twitter.com/TheIdOfAlan">alan w. smith</a>

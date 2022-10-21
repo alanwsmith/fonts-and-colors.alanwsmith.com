@@ -79,33 +79,51 @@
         padding-bottom: 12px;
         font-size: 0.9rem;
       }
+      input {
+        border: 1px solid black;
+      }
     </style>
 
     <script type="text/javascript">
-      function updateBackgroundColorText(event) {
-        console.log(event)
-        const color = scrubColor(event.target.value)
-        if (color) {
-          document.body.style.background = `#${color}`
-        }
-      }
-
-      function updateBackgroundColorPicker(event) {
-        const color = scrubColor(event.target.value)
-        if (color) {
-          document.body.style.background = `#${color}`
-        }
-      }
-
-      function scrubColor(unscrubbedColor) {
-        const scrubbedColor = unscrubbedColor
-          .toLowerCase()
-          .replace(/^#/, '')
-          .replaceAll(/[^a-f0-9]/g, '')
-        return scrubbedColor.length === 6 ? scrubbedColor : null
-      }
-
       let changeInProgress = false
+
+      const log = (msg) => {
+        console.log(msg)
+      }
+
+      const handleClick = (event) => {
+        const parts = event.target.id.split('--')
+        if (parts[0] == 'move') {
+          const fromColor = document.getElementById(
+            `css--${parts[1]}--string`
+          ).value
+          const toColor = document.getElementById(
+            `css--${parts[2]}--string`
+          ).value
+          log(`-- ${fromColor}`)
+          log(`-- ${toColor}`)
+          if (fromColor.length === 7 && toColor.length === 7) {
+            document.getElementById(`css--${parts[2]}--string`).value =
+              fromColor
+            document.getElementById(`css--${parts[1]}--string`).value = toColor
+            // fake events to trigger live update
+            handleColorChange({
+              target: {
+                value: fromColor,
+                id: `css--${parts[2]}--string`,
+              },
+            })
+            handleColorChange({
+              target: {
+                value: toColor,
+                id: `css--${parts[1]}--string`,
+              },
+            })
+
+            log(event.target.id)
+          }
+        }
+      }
 
       const handleColorChange = (event) => {
         if (!changeInProgress) {
@@ -131,10 +149,17 @@
           if (updateValue) {
             if (idParts[1] === 'background') {
               document.body.style.background = updateValue
+            } else if (idParts[1] === 'text') {
+              document.body.style.color = updateValue
             } else if (idParts[1] === 'header') {
               const headers = document.getElementsByTagName('h1')
               for (const header of headers) {
                 header.style.color = updateValue
+              }
+            } else if (idParts[1] === 'links') {
+              const links = document.getElementsByTagName('a')
+              for (const link of links) {
+                link.style.color = updateValue
               }
             }
           }
@@ -146,25 +171,9 @@
         document
           .getElementById('color-pickers')
           .addEventListener('input', handleColorChange)
-
-        /*
-
         document
-          .getElementById('css-background-color-text')
-          .addEventListener('input', updateBackgroundColorText)
-        document
-          .getElementById('css-background-color-picker')
-          .addEventListener('input', updateBackgroundColorPicker)
-
-          /(event) => {
-
-            <!-- console.log(code) -->
-            <!-- if (code.length === 6) { -->
-            <!--   console.log('change') -->
-            <!--   document.body.style.background = `#${code}` -->
-            <!-- } -->
-          }
-            */
+          .getElementById('color-pickers')
+          .addEventListener('click', handleClick)
       }
       document.addEventListener('DOMContentLoaded', engage)
     </script>
@@ -179,32 +188,72 @@
       <h1>Fonts And Colors</h1>
       <div id="color-pickers">
         <div>
-          <label for="css--background--string">Background Color:</label>
+          <input type="color" id="css--background--picker" value="#232946" />
           <input
             type="text"
             id="css--background--string"
             size="7"
             value="#232946"
           />
-          <input type="color" id="css--background--picker" value="#232946" />
+          <label for="css--background--string">Background Color</label>
         </div>
+
         <div>
-          <label for="css--header--string">Header Color:</label>
+          <button id="move--background--text">&#8657; &#8659;</button>
+        </div>
+
+        <div>
+          <input type="color" id="css--text--picker" value="#b8c1ec" />
+          <input type="text" id="css--text--string" size="7" value="#b8c1ec" />
+          <label for="css--text--string">Text</label>
+        </div>
+
+        <div>
+          <button id="move--text--header">&#8657; &#8659;</button>
+        </div>
+
+        <div>
+          <input type="color" id="css--header--picker" value="#fffffe" />
           <input
             type="text"
             id="css--header--string"
             size="7"
             value="#fffffe"
           />
-          <input type="color" id="css--header--picker" value="#fffffe" />
+          <label for="css--header--string">Headers</label>
+        </div>
+
+        <div>
+          <button id="move--header--links">&#8657; &#8659;</button>
+        </div>
+
+        <div>
+          <input type="color" id="css--links--picker" value="#eebbc3" />
+          <input type="text" id="css--links--string" size="7" value="#eebbc3" />
+          <label for="css--links--string">Links</label>
         </div>
       </div>
 
       <h3>TODO:</h3>
       <ul>
+        <li>
+          Figure out the bug in Safari where if you open the color picker and
+          close it without making a change and the click the up/down errors the
+          page freaks out and reloads.
+        </li>
+        <li>
+          Similar problem is if you open the color picker then click on the
+          update arrow before closing it
+        </li>
         <li>Put stuff in local storage so it's there when you come back</li>
         <li>See how the color picker works in different browsers</li>
         <li>Print out a stylesheet with the values</li>
+        <li>Add fonts</li>
+        <li>Put in level to headers</li>
+        <li>Add button to link level on and level 2 headers</li>
+        <li>Make an optional accent color area?</li>
+        <li>Add existing color pallets to click on and setup</li>
+        <li>Add buttons to swap colors up and down</li>
       </ul>
     </main>
     <footer>

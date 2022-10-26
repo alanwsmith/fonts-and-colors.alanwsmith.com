@@ -3,36 +3,38 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>The Fonts And Colors Of Alan</title>
+    <title>Alan's Font and Color Picker</title>
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="The Fonts And Colors Of Alan" />
+    <meta property="og:title" content="Alan's Font and Color Picker" />
     <meta
       property="og:description"
       content="None of the font or color picker sites work for me. So... this"
     />
     <meta
       property="og:image"
-      content="https://fonts-and-colors.alanwsmith.com/assets/og-images/main.png"
+      content="https://res.cloudinary.com/awsimages/image/upload/w_1200,h_630,o_0,b_rgb:000000/c_fit,w_1020,h_430,co_rgb:eeeeee,l_text:Abhaya%20Libre_136_bold:Alan's%20Font%20and%20Color%20Picker/fl_layer_apply,g_north_west,x_65,y_65/co_rgb:666666,l_text:Inconsolata_42_bold:from%20alan%20w.%20smith/fl_layer_apply,g_south_west,x_65,y_45/co_rgb:666666,l_text:Inconsolata_42_bold:alanwsmith.com/fl_layer_apply,g_south_east,x_65,y_45/1x1.png"
     />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site:id" content="@TheIdOfAlan" />
     <meta name="twitter:creator" content="@TheIdOfAlan" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fuzzy+Bubbles:wght@400;700&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
       rel="stylesheet"
     />
+
     <link
       rel="icon"
       type="image/png"
       sizes="228x228"
-      href="/assets/favicons/228x228.png"
+      href="/favicons/228x228.png"
     />
     <link
       rel="apple-touch-icon-precomposed"
       sizes="180x180"
-      href="/assets/favicons/180x180.png"
+      href="/favicons/180x180.png"
     />
     <style>
       body {
@@ -58,143 +60,134 @@
         text-decoration: none;
       }
       header {
-        padding-top: 18px;
+        padding-top: 1rem;
         padding-bottom: 4px;
         width: 100%;
-        max-width: 76ch;
+        max-width: 900px;
         margin: 0 auto;
-        border-bottom: 1px solid #888;
+        height: 1.2rem;
       }
       main {
         width: 100%;
-        max-width: 76ch;
+        max-width: 900px;
         margin: 0 auto;
       }
       footer {
         width: 100%;
-        max-width: 76ch;
+        max-width: 900px;
         margin: 0 auto;
         text-align: center;
         margin-top: 60px;
         padding-bottom: 12px;
         font-size: 0.9rem;
       }
+      input {
+        border: 1px solid black;
+      }
+      .exempt-from-change {
+        font-family: 'Roboto', sans-serif;
+      }
+      #font-input-field {
+        background-color: white;
+        height: 1.6rem;
+        padding: 4px;
+        color: black;
+      }
     </style>
 
-    <script type="text/javascript">
-      function updateBackgroundColorText(event) {
-        console.log(event)
-        const color = scrubColor(event.target.value)
-        if (color) {
-          document.body.style.background = `#${color}`
-        }
-      }
-
-      function updateBackgroundColorPicker(event) {
-        const color = scrubColor(event.target.value)
-        if (color) {
-          document.body.style.background = `#${color}`
-        }
-      }
-
-      function scrubColor(unscrubbedColor) {
-        const scrubbedColor = unscrubbedColor
-          .toLowerCase()
-          .replace(/^#/, '')
-          .replaceAll(/[^a-f0-9]/g, '')
-        return scrubbedColor.length === 6 ? scrubbedColor : null
-      }
-
-      let changeInProgress = false
-
-      const handleColorChange = (event) => {
-        if (!changeInProgress) {
-          changeInProgress = true
-          let baseValue = event.target.value.toLowerCase()
-          let updateValue = null
-          const idParts = event.target.id.split('--')
-          if (idParts[2] === 'picker') {
-            updateValue = baseValue
-            document.getElementById(`css--${idParts[1]}--string`).value =
-              updateValue
-          } else {
-            const checkValue = baseValue
-              .replace(/^#/, '')
-              .replaceAll(/[^a-f0-9]/g, '')
-            if (checkValue.length === 6) {
-              updateValue = `#${checkValue}`
-              console.log(updateValue)
-              document.getElementById(`css--${idParts[1]}--picker`).value =
-                updateValue
-            }
-          }
-          if (updateValue) {
-            if (idParts[1] === 'background') {
-              document.body.style.background = baseValue
-            }
-          }
-          changeInProgress = false
-        }
-      }
-
-      function engage() {
-        document
-          .getElementById('color-pickers')
-          .addEventListener('input', handleColorChange)
-
-        /*
-
-        document
-          .getElementById('css-background-color-text')
-          .addEventListener('input', updateBackgroundColorText)
-        document
-          .getElementById('css-background-color-picker')
-          .addEventListener('input', updateBackgroundColorPicker)
-
-          /(event) => {
-
-            <!-- console.log(code) -->
-            <!-- if (code.length === 6) { -->
-            <!--   console.log('change') -->
-            <!--   document.body.style.background = `#${code}` -->
-            <!-- } -->
-          }
-            */
-      }
-      document.addEventListener('DOMContentLoaded', engage)
-    </script>
+    <script src="script.js"></script>
   </head>
+
   <body>
     <header>
       <a href="https://www.alanwsmith.com/">alanwsmith.com</a> ~
       <a href="https://links.alanwsmith.com">links</a> ~
-      <a href="https://podcast.alanwsmith.com/">podcast</a>
+      <a href="https://podcast.alanwsmith.com/">podcast</a> ~
+      <a href="https://twitter.com/TheIdOfAlan">twitter</a>
     </header>
     <main>
-      <h1>Fonts And Colors</h1>
-      <div id="color-pickers">
-        <label for="css--background--string">Background Color:</label>
-        <input
-          type="text"
-          id="css--background--string"
-          size="7"
-          value="#232946"
-        />
-        <input type="color" id="css--background--picker" value="#232946" />
+      <h1 class="exempt-from-change main-header">Fonts And Colors</h1>
+      <div id="color-pickers" class="exempt-from-change">
+        <div>
+          <input type="color" id="css--background--picker" value="#232946" />
+          <input
+            type="text"
+            id="css--background--string"
+            size="7"
+            value="#232946"
+          />
+          <label for="css--background--string">Background</label>
+        </div>
+        <div>
+          <button id="move--background--text">&#8657; &#8659;</button>
+        </div>
+
+        <div>
+          <input type="color" id="css--text--picker" value="#b8c1ec" />
+          <input type="text" id="css--text--string" size="7" value="#b8c1ec" />
+          <label for="css--text--string">Text</label>
+          <div id="menuWrapper">
+            <div id="font-input-field" contenteditable="true"></div>
+          </div>
+          <datalist id="font-list--body" class="font-list"></datalist>
+        </div>
+        <div>
+          <button id="move--text--header">&#8657; &#8659;</button>
+        </div>
+
+        <div>
+          <input type="color" id="css--header--picker" value="#fffffe" />
+          <input
+            type="text"
+            id="css--header--string"
+            size="7"
+            value="#fffffe"
+          />
+          <label for="css--header--string">Headers</label>
+        </div>
+        <div>
+          <button id="move--header--links">&#8657; &#8659;</button>
+        </div>
+        <div>
+          <input type="color" id="css--links--picker" value="#eebbc3" />
+          <input type="text" id="css--links--string" size="7" value="#eebbc3" />
+          <label for="css--links--string">Links</label>
+        </div>
       </div>
 
-      <div>
-        <label for="css-header-color">Header</label>
-        <input type="color" id="css-header-color" size="7" />
-      </div>
+      <h3>TODO List (in no particular order):</h3>
 
-      <h3>TODO:</h3>
       <ul>
+        <li>Keep a list of recent fonts and put them up top</li>
+        <li>Save snapshots for comparisons</li>
+        <li>URL parsing to send links with settings</li>
+        <li>Provide a stylesheet with the settings</li>
+        <li>
+          Setup so there is just one handler for the input. (instead of a
+          separate one for the handleColorChange)
+        </li>
+        <li>
+          Figure out the bug in Safari where if you open the color picker and
+          close it without making a change and the click the up/down errors the
+          page freaks out and reloads.
+        </li>
+        <li>
+          Similar problem is if you open the color picker then click on the
+          update arrow before closing it
+        </li>
         <li>Put stuff in local storage so it's there when you come back</li>
         <li>See how the color picker works in different browsers</li>
         <li>Print out a stylesheet with the values</li>
+        <li>Add fonts</li>
+        <li>Put in level to headers</li>
+        <li>Add button to link level on and level 2 headers</li>
+        <li>Make an optional accent color area?</li>
+        <li>Add existing color pallets to click on and setup</li>
+        <li>Add buttons to swap colors up and down</li>
       </ul>
+      <div id="debug-list"></div>
     </main>
+
     <footer>
       made by <a href="https://twitter.com/TheIdOfAlan">alan w. smith</a>
       <br />

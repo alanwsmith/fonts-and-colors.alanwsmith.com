@@ -16,37 +16,81 @@ const state = {
 const associateInputs = () => {
     for (selectorId of Object.keys(state.selectors)) {
         const selector = state.selectors[selectorId]
-        selector.filterEl = selector.element.querySelector('input')
+        selector.filterEl = selector.selectorEl.querySelector('input')
     }
 }
 
 const attachListeners = () => {
     for (selectorId of Object.keys(state.selectors)) {
-        const selectorEl = state.selectors[selectorId].element
+        const selectorEl = state.selectors[selectorId].selectorEl
         selectorEl
             .querySelector('input')
-            .addEventListener('focus', handleSelectorFocus)
+            .addEventListener('focus', handleInputFocus)
     }
+}
+
+const handlePageClick = (event) => {
+    // if (!event.target.id) {
+    //     deactivateSelector()
+    // } else {
+    // if (!event.target.id) {
+    //     deactivateSelector()
+    // } else {
+    //     const idParts = event.target.id.split('--')
+    //     if (idParts[0] !== 'awsselect') {
+    //         deactivateSelector()
+    //     } else {
+    //         if (idParts[1] === 'selection') {
+    //             const theValue = event.target.value
+    //             pickSelection(theValue)
+    //         }
+    //     }
+    // }
 }
 
 const handleSelectKeyup = (event) => {
     console.log('select keyup')
 }
 
-const handleSelectorFocus = (event) => {
-    const selector = state.selectors[event.target.parentElement.id]
+const handleInputFocus = (event) => {
+    const selectorId = event.target.parentElement.id
+    const selector = state.selectors[selectorEl]
 
     // remove existing drop down
-    if (selector.querySelector('select')) {
-        selector.querySelector('select').blur()
-        selector.querySelector('select').remove()
+    if (selector.selectorEl.querySelector('select')) {
+        selector.selectorEl.querySelector('select').blur()
+        selector.selectorEl.querySelector('select').remove()
     }
 
     // make new drop down
     selector.selectEl = document.createElement('select')
     selector.selectEl.size = 5
-    selector.element.querySelector('div').appendChild(selector.selectEl)
-    selector.optionsEl.addEventListener('keyup', handleSelectKeyup)
+    selector.selectEl.addEventListener('keyup', handleSelectKeyup)
+    selector.selectorEl.querySelector('div').appendChild(selector.selectEl)
+    selector.placeholderString = ''
+    setOptions(selectorId)
+
+    // prototype
+
+    // if (state.optionsEl) {
+    //     state.optionsEl.blur()
+    //     state.optionsEl.remove()
+    // }
+
+    // state.optionsEl = document.createElement('select')
+    // state.optionsEl.size = 5
+    //
+    //////// skipping and just using selector
+    // state.optionsEl.id = 'awsselect--options'
+    ////////
+    //
+    // state.wrapperEl.appendChild(state.optionsEl)
+    // state.optionsEl.addEventListener('keyup', handleOptionsKeyup)
+    // state.filterEl.placeholder = ''
+    //
+    //////// skipping. already done with  loadOptions
+    // setOptions()
+    /////////
 }
 
 // Pull in the initail options list to work off of
@@ -54,7 +98,7 @@ const loadOptions = () => {
     console.log('-- loadOptions')
     for (selectorId of Object.keys(state.selectors)) {
         const selector = state.selectors[selectorId]
-        const options = selector.element.querySelectorAll('option')
+        const options = selector.selectorEl.querySelectorAll('option')
         for (x = 0; x < options.length; x += 1) {
             selector.defaultOptions.push({
                 value: options[x].value,
@@ -63,6 +107,10 @@ const loadOptions = () => {
         }
     }
 }
+
+
+const 
+
 
 const initializeAwsSelectors = () => {
     console.log('Initializing Selectors')
@@ -74,13 +122,15 @@ const initializeAwsSelectors = () => {
         selectorIndex += 1
     ) {
         state.selectors[selectorEls[selectorIndex].id] = {
-            element: selectorEls[selectorIndex],
+            selectorEl: selectorEls[selectorIndex],
             defaultOptions: [],
         }
     }
     loadOptions()
     associateInputs()
     attachListeners()
+
+    document.addEventListener('mousedown', handlePageClick)
 }
 
 document.addEventListener('DOMContentLoaded', initializeAwsSelectors)

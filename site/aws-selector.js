@@ -1,5 +1,4 @@
 const state = {
-    // selectorEls: [],
     selectors: {},
 }
 
@@ -14,17 +13,40 @@ const state = {
           </div>
 */
 
+const associateInputs = () => {
+    for (selectorId of Object.keys(state.selectors)) {
+        const selector = state.selectors[selectorId]
+        selector.filterEl = selector.element.querySelector('input')
+    }
+}
+
 const attachListeners = () => {
-    for (i = 0; i < state.selectorEls.length; i += 1) {
-        state.selectorEls[i]
+    for (selectorId of Object.keys(state.selectors)) {
+        const selectorEl = state.selectors[selectorId].element
+        selectorEl
             .querySelector('input')
             .addEventListener('focus', handleSelectorFocus)
     }
 }
 
+const handleSelectKeyup = (event) => {
+    console.log('select keyup')
+}
+
 const handleSelectorFocus = (event) => {
-    console.log(event.target)
-    console.log(event.target.parentElement)
+    const selector = state.selectors[event.target.parentElement.id]
+
+    // remove existing drop down
+    if (selector.querySelector('select')) {
+        selector.querySelector('select').blur()
+        selector.querySelector('select').remove()
+    }
+
+    // make new drop down
+    selector.selectEl = document.createElement('select')
+    selector.selectEl.size = 5
+    selector.element.querySelector('div').appendChild(selector.selectEl)
+    selector.optionsEl.addEventListener('keyup', handleSelectKeyup)
 }
 
 // Pull in the initail options list to work off of
@@ -42,7 +64,7 @@ const loadOptions = () => {
     }
 }
 
-const awsInitializeSelectors = () => {
+const initializeAwsSelectors = () => {
     console.log('Initializing Selectors')
     // Load the selectors and key them off their ID
     const selectorEls = document.getElementsByClassName('aws-selector--wrapper')
@@ -56,13 +78,9 @@ const awsInitializeSelectors = () => {
             defaultOptions: [],
         }
     }
-
     loadOptions()
-    // attachListeners()
-
-    // state.selectors.forEach((item) => {
-    //     console.log(item)
-    // })
+    associateInputs()
+    attachListeners()
 }
 
-document.addEventListener('DOMContentLoaded', awsInitializeSelectors)
+document.addEventListener('DOMContentLoaded', initializeAwsSelectors)

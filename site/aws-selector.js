@@ -21,7 +21,7 @@ const associateInputs = () => {
 }
 
 const attachListeners = () => {
-    console.log('attachListeners')
+    console.log('### attachListeners')
     for (selectorId of Object.keys(state.selectors)) {
         console.log(`-- ${selectorId}`)
         const selectorEl = state.selectors[selectorId].selectorEl
@@ -51,10 +51,11 @@ const handlePageClick = (event) => {
 }
 
 const handleSelectKeyup = (event) => {
-    console.log('select keyup')
+    console.log('### handleSelectKeyup')
 }
 
 const buildSelectEl = (selector) => {
+    console.log('### buildSelectEl')
     // remove prior instance if it exists
     if (selector.selectorEl.querySelector('select')) {
         // selector.selectorEl.querySelector('select').blur()
@@ -63,16 +64,17 @@ const buildSelectEl = (selector) => {
 
     // make new drop down
     selector.selectEl = document.createElement('select')
-    selector.selectEl.size = 6
+    selector.selectEl.size = 5
     selector.selectEl.addEventListener('keyup', handleSelectKeyup)
     // selector.selectorEl.querySelector('div').appendChild(selector.selectEl)
 }
 
 const handleInputFocus = (event) => {
+    console.log('### handleInputFocus')
     const selectorId = event.target.parentElement.id
     const selector = state.selectors[selectorId]
     buildSelectEl(selector)
-
+    loadOptions(selector)
     selector.selectorEl.querySelector('div').appendChild(selector.selectEl)
     setPlaceholder(selector, '')
 
@@ -112,8 +114,9 @@ const handleInputFocus = (event) => {
 
 // Pull in the initail options list to work off of
 const loadDefaultOptions = () => {
-    console.log('-- loadOptions')
+    console.log('### loadDefaultOptions')
     for (selectorId of Object.keys(state.selectors)) {
+        console.log(`-- ${selectorId}`)
         const selector = state.selectors[selectorId]
         const options = selector.selectorEl.querySelectorAll('option')
         for (x = 0; x < options.length; x += 1) {
@@ -125,13 +128,28 @@ const loadDefaultOptions = () => {
     }
 }
 
+const loadOptions = (selector) => {
+    console.log('### loadOptions')
+    console.log(`-- ${selector.id}`)
+    selector.defaultOptions.forEach((defaultOption) => {
+        if (defaultOption.value.includes(selector.inputEl.value)) {
+            // this looks like it'll work for no value in iput
+            // but need to check if input gets added then removed
+            const optionEl = document.createElement('option')
+            optionEl.innerText = defaultOption.text
+            selector.selectEl.appendChild(optionEl)
+        }
+    })
+}
+
 const setPlaceholder = (selector, value) => {
+    console.log('### setPlaceholder')
     selector.placeholder = value
     selector.inputEl.placeholder = ''
 }
 
 const initializeAwsSelectors = () => {
-    console.log('Initializing Selectors')
+    console.log('### initializeAwsSelectors')
     // Load the selectors and key them off their ID
     const selectorEls = document.getElementsByClassName('aws-selector--wrapper')
     for (
@@ -140,11 +158,11 @@ const initializeAwsSelectors = () => {
         selectorIndex += 1
     ) {
         console.log(`-- ${selectorEls[selectorIndex].id}`)
-
         state.selectors[selectorEls[selectorIndex].id] = {
             selectorEl: selectorEls[selectorIndex],
             defaultOptions: [],
             placeholder: '',
+            id: selectorEls[selectorIndex].id,
         }
     }
     loadDefaultOptions()

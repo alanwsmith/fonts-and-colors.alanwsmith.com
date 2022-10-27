@@ -16,12 +16,14 @@ const state = {
 const associateInputs = () => {
     for (selectorId of Object.keys(state.selectors)) {
         const selector = state.selectors[selectorId]
-        selector.filterEl = selector.selectorEl.querySelector('input')
+        selector.inputEl = selector.selectorEl.querySelector('input')
     }
 }
 
 const attachListeners = () => {
+    console.log('attachListeners')
     for (selectorId of Object.keys(state.selectors)) {
+        console.log(`-- ${selectorId}`)
         const selectorEl = state.selectors[selectorId].selectorEl
         selectorEl
             .querySelector('input')
@@ -52,23 +54,38 @@ const handleSelectKeyup = (event) => {
     console.log('select keyup')
 }
 
-const handleInputFocus = (event) => {
-    const selectorId = event.target.parentElement.id
-    const selector = state.selectors[selectorEl]
-
-    // remove existing drop down
+const buildSelectEl = (selector) => {
+    // remove prior instance if it exists
     if (selector.selectorEl.querySelector('select')) {
-        selector.selectorEl.querySelector('select').blur()
+        // selector.selectorEl.querySelector('select').blur()
         selector.selectorEl.querySelector('select').remove()
     }
 
     // make new drop down
     selector.selectEl = document.createElement('select')
-    selector.selectEl.size = 5
+    selector.selectEl.size = 6
     selector.selectEl.addEventListener('keyup', handleSelectKeyup)
+    // selector.selectorEl.querySelector('div').appendChild(selector.selectEl)
+}
+
+const handleInputFocus = (event) => {
+    const selectorId = event.target.parentElement.id
+    const selector = state.selectors[selectorId]
+    buildSelectEl(selector)
+
     selector.selectorEl.querySelector('div').appendChild(selector.selectEl)
-    selector.placeholderString = ''
-    setOptions(selectorId)
+    setPlaceholder(selector, '')
+
+    // // remove existing drop down
+    // if (selector.selectorEl.querySelector('select')) {
+    //     selector.selectorEl.querySelector('select').blur()
+    //     selector.selectorEl.querySelector('select').remove()
+    // }
+    // // make new drop down
+    // selector.selectEl = document.createElement('select')
+    // selector.selectEl.size = 6
+    // selector.selectEl.addEventListener('keyup', handleSelectKeyup)
+    // selector.selectorEl.querySelector('div').appendChild(selector.selectEl)
 
     // prototype
 
@@ -94,7 +111,7 @@ const handleInputFocus = (event) => {
 }
 
 // Pull in the initail options list to work off of
-const loadOptions = () => {
+const loadDefaultOptions = () => {
     console.log('-- loadOptions')
     for (selectorId of Object.keys(state.selectors)) {
         const selector = state.selectors[selectorId]
@@ -108,9 +125,10 @@ const loadOptions = () => {
     }
 }
 
-
-const 
-
+const setPlaceholder = (selector, value) => {
+    selector.placeholder = value
+    selector.inputEl.placeholder = ''
+}
 
 const initializeAwsSelectors = () => {
     console.log('Initializing Selectors')
@@ -121,15 +139,17 @@ const initializeAwsSelectors = () => {
         selectorIndex < selectorEls.length;
         selectorIndex += 1
     ) {
+        console.log(`-- ${selectorEls[selectorIndex].id}`)
+
         state.selectors[selectorEls[selectorIndex].id] = {
             selectorEl: selectorEls[selectorIndex],
             defaultOptions: [],
+            placeholder: '',
         }
     }
-    loadOptions()
+    loadDefaultOptions()
     associateInputs()
     attachListeners()
-
     document.addEventListener('mousedown', handlePageClick)
 }
 

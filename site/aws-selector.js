@@ -137,6 +137,7 @@ const loadOptions = (selector) => {
             // but need to check if input gets added then removed
             const optionEl = document.createElement('option')
             optionEl.innerText = defaultOption.text
+            optionEl.value = defaultOption.value
             selector.selectEl.appendChild(optionEl)
         }
     })

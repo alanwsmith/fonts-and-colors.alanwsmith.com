@@ -20,6 +20,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
     <link
       href="https://fonts.googleapis.com/css2?family=Fuzzy+Bubbles:wght@400;700&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
       rel="stylesheet"
@@ -36,6 +37,7 @@
       sizes="180x180"
       href="/favicons/180x180.png"
     />
+
     <style>
       body {
         background-color: #232946;
@@ -87,15 +89,10 @@
       .exempt-from-change {
         font-family: 'Roboto', sans-serif;
       }
-      #font-input-field {
-        background-color: white;
-        height: 1.6rem;
-        padding: 4px;
-        color: black;
-      }
     </style>
 
     <script src="script.js"></script>
+    <script src="aws-selector.js"></script>
   </head>
 
   <body>
@@ -106,7 +103,22 @@
       <a href="https://twitter.com/TheIdOfAlan">twitter</a>
     </header>
     <main>
+      <hr />
+      <h1>WORK IN PROGRESS</h1>
+      <p>
+        The colors work. I'm still getting the font selection in place. It's
+        proving way harder than expected to get the functionality I'm after.
+        It'll be worth it though.
+      </p>
+      <hr />
+
       <h1 class="exempt-from-change main-header">Fonts And Colors</h1>
+      <p>
+        None of the tools out there let me experiment with both fonts and colors
+        on an actual content page in a way that I like. So, I built this. I hope
+        you find it useful too.
+      </p>
+      <p>-a</p>
       <div id="color-pickers" class="exempt-from-change">
         <div>
           <input type="color" id="css--background--picker" value="#232946" />
@@ -126,11 +138,19 @@
           <input type="color" id="css--text--picker" value="#b8c1ec" />
           <input type="text" id="css--text--string" size="7" value="#b8c1ec" />
           <label for="css--text--string">Text</label>
-          <div id="menuWrapper">
-            <div id="font-input-field" contenteditable="true"></div>
+
+          <div class="aws-selector--wrapper" id="text-font-selector">
+            <input class="aws-selector--input" type="text" size="20" />
+            <div class="aws-selector--options-wrapper">
+              <select style="display: none" class="aws-selector--options-list">
+                <option value="fontA">font--a</option>
+                <option value="fontB">font--b</option>
+                <option value="fontC">font--c</option>
+              </select>
+            </div>
           </div>
-          <datalist id="font-list--body" class="font-list"></datalist>
         </div>
+
         <div>
           <button id="move--text--header">&#8657; &#8659;</button>
         </div>
@@ -144,6 +164,17 @@
             value="#fffffe"
           />
           <label for="css--header--string">Headers</label>
+
+          <div class="aws-selector--wrapper" id="text-header-selector">
+            <input class="aws-selector--input" type="text" size="20" />
+            <div class="aws-selector--options-wrapper">
+              <select style="display: none" class="aws-selector--options-list">
+                <option value="headerA">header--a</option>
+                <option value="headerB">header--b</option>
+                <option value="headerC">header--c</option>
+              </select>
+            </div>
+          </div>
         </div>
         <div>
           <button id="move--header--links">&#8657; &#8659;</button>
@@ -152,6 +183,17 @@
           <input type="color" id="css--links--picker" value="#eebbc3" />
           <input type="text" id="css--links--string" size="7" value="#eebbc3" />
           <label for="css--links--string">Links</label>
+
+          <div class="aws-selector--wrapper" id="text-link-selector">
+            <input class="aws-selector--input" type="text" size="20" />
+            <div class="aws-selector--options-wrapper">
+              <select style="display: none" class="aws-selector--options-list">
+                <option value="linkA">link--a</option>
+                <option value="linkB">link--b</option>
+                <option value="linkC">link--c</option>
+              </select>
+            </div>
+          </div>
         </div>
       </div>
 

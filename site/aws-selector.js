@@ -13,6 +13,10 @@ const state = {
           </div>
 */
 
+const log = (msg) => {
+    console.log(`${new Date().getTime()} - ${msg}`)
+}
+
 const associateInputs = () => {
     for (selectorId of Object.keys(state.selectors)) {
         const selector = state.selectors[selectorId]
@@ -31,23 +35,39 @@ const attachListeners = () => {
     }
 }
 
+const deactivateSelector = (selector) => {
+    log(`### deactiveSelector`)
+    log(`-- ${selector.id}`)
+    if (selector.selectEl) {
+        selector.selectEl.blur()
+        selector.selectEl.remove()
+    }
+}
+
+const deactivateSelectors = () => {
+    log(`### deactivateSelectors`)
+    for (const selectorId in state.selectors) {
+        deactivateSelector(state.selectors[selectorId])
+    }
+}
+
 const handlePageClick = (event) => {
-    // if (!event.target.id) {
-    //     deactivateSelector()
-    // } else {
-    // if (!event.target.id) {
-    //     deactivateSelector()
-    // } else {
-    //     const idParts = event.target.id.split('--')
-    //     if (idParts[0] !== 'awsselect') {
-    //         deactivateSelector()
-    //     } else {
-    //         if (idParts[1] === 'selection') {
-    //             const theValue = event.target.value
-    //             pickSelection(theValue)
-    //         }
-    //     }
-    // }
+    if (!event.target.id) {
+        deactivateSelectors()
+        // } else {
+        // if (!event.target.id) {
+        //     deactivateSelector()
+        // } else {
+        //     const idParts = event.target.id.split('--')
+        //     if (idParts[0] !== 'awsselect') {
+        //         deactivateSelector()
+        //     } else {
+        //         if (idParts[1] === 'selection') {
+        //             const theValue = event.target.value
+        //             pickSelection(theValue)
+        //         }
+        //     }
+    }
 }
 
 const handleSelectKeyup = (event) => {
@@ -71,6 +91,10 @@ const buildSelectEl = (selector) => {
 
 const handleInputFocus = (event) => {
     console.log('### handleInputFocus')
+    //
+    // TODO: Close other selectors if you click
+    // on a different one
+    //
     const selectorId = event.target.parentElement.id
     const selector = state.selectors[selectorId]
     buildSelectEl(selector)

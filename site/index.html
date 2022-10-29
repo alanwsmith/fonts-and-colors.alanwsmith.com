@@ -95,7 +95,7 @@
       with fonts during dev 
     <script src="script.js"></script>
     -->
-    <script src="aws-selector.js"></script>
+    <script src="font-selector.js"></script>
   </head>
 
   <body>
@@ -142,21 +142,11 @@
           <input type="text" id="css--text--string" size="7" value="#b8c1ec" />
           <label for="css--text--string">Text</label>
 
-          <div class="aws-selector--wrapper" id="text-font-selector">
-            <input
-              class="aws-selector--input"
-              type="text"
-              size="20"
-              placeholder="Initial font name here"
-            />
-            <div class="aws-selector--options-wrapper">
-              <select style="display: none" class="aws-selector--options-list">
-                <option value="fontA">font--a</option>
-                <option value="fontB">font--b</option>
-                <option value="fontC">font--c</option>
-              </select>
-            </div>
-          </div>
+          <strict-select>
+            <option value="fontA">font--a</option>
+            <option value="fontB">font--b</option>
+            <option value="fontC">font--c</option>
+          </strict-select>
         </div>
 
         <div>
@@ -172,17 +162,6 @@
             value="#fffffe"
           />
           <label for="css--header--string">Headers</label>
-
-          <div class="aws-selector--wrapper" id="text-header-selector">
-            <input class="aws-selector--input" type="text" size="20" />
-            <div class="aws-selector--options-wrapper">
-              <select style="display: none" class="aws-selector--options-list">
-                <option value="headerA">header--a</option>
-                <option value="headerB">header--b</option>
-                <option value="headerC">header--c</option>
-              </select>
-            </div>
-          </div>
         </div>
         <div>
           <button id="move--header--links">&#8657; &#8659;</button>
@@ -191,19 +170,17 @@
           <input type="color" id="css--links--picker" value="#eebbc3" />
           <input type="text" id="css--links--string" size="7" value="#eebbc3" />
           <label for="css--links--string">Links</label>
-
-          <div class="aws-selector--wrapper" id="text-link-selector">
-            <input class="aws-selector--input" type="text" size="20" />
-            <div class="aws-selector--options-wrapper">
-              <select style="display: none" class="aws-selector--options-list">
-                <option value="linkA">link--a</option>
-                <option value="linkB">link--b</option>
-                <option value="linkC">link--c</option>
-              </select>
-            </div>
-          </div>
         </div>
       </div>
+      <p>
+        TODO: Add note to prototype about display inline being used to prevent
+        perceived bug where if you click on the invisile part of the div that
+        spans the page it doesn't close the selection box
+      </p>
+      <p>
+        TODO: Add note about options being sent in with display none so they can
+        feed the menu without showing up at first.
+      </p>
 
       <h3>TODO List (in no particular order):</h3>
 

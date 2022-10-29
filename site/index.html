@@ -67,7 +67,7 @@
         width: 100%;
         max-width: 900px;
         margin: 0 auto;
-        height: 1.2rem;
+        height: 1.8rem;
       }
       main {
         width: 100%;
@@ -91,6 +91,10 @@
       .exempt-from-change {
         font-family: 'Roboto', sans-serif;
       }
+      #col-wrapper {
+        display: grid;
+        grid-template-columns: 700px 200px;
+      }
     </style>
 
     <!-- turning off colors so they don't mess
@@ -100,6 +104,7 @@
     <script src="font-list.js"></script>
     <script src="font-selector.js"></script>
     <script src="color-picker.js"></script>
+    <script src="color-listeners.js"></script>
   </head>
 
   <body>
@@ -110,46 +115,92 @@
       <a href="https://twitter.com/TheIdOfAlan">twitter</a>
     </header>
     <main>
-      <hr />
-      <h1>WORK IN PROGRESS</h1>
-      <p>
-        The colors work. I'm still getting the font selection in place. It's
-        proving way harder than expected to get the functionality I'm after.
-        It'll be worth it though.
-      </p>
-      <hr />
-
-      <h1 class="exempt-from-change main-header">Fonts And Colors</h1>
-      <p>
-        None of the tools out there let me experiment with both fonts and colors
-        on an actual content page in a way that I like. So, I built this. I hope
-        you find it useful too.
-      </p>
-      <p>-a</p>
-
-      <hsla-picker id="body-color-picker"></hsla-picker>
-      <input type="text" id="body-color-string" />
-
-      <div id="color-pickers" class="exempt-from-change">
+      <div id="col-wrapper">
         <div>
-          <input type="color" id="css--background--picker" value="#232946" />
-          <input
-            type="text"
-            id="css--background--string"
-            size="7"
-            value="#232946"
-          />
-          <label for="css--background--string">Background</label>
+          <h1>WORK IN PROGRESS</h1>
+          <p>
+            The basics are mostly in place, but this the first set of features
+            isn't complete yet. I'll try to keep things that are already working
+            in a good state but may have to bust some things to make progress.
+          </p>
+          <hr />
+
+          <h1 class="exempt-from-change main-header">
+            Alan's Font and Color Picker
+          </h1>
+          <p>
+            None of the tools out there let me experiment with both fonts and
+            colors on an actual content page in a way that I like. So, I built
+            this. I hope you find it useful.
+          </p>
+          <p>-a</p>
+          <p>
+            TODO: Add note to prototype about display inline being used to
+            prevent perceived bug where if you click on the invisile part of the
+            div that spans the page it doesn't close the selection box
+          </p>
+          <p>
+            TODO: Add note about options being sent in with display none so they
+            can feed the menu without showing up at first.
+          </p>
+
+          <h3>TODO List (in no particular order):</h3>
+          <ul>
+            <li>[ ] - Add content</li>
+            <li>[ ] - Add accent text or area</li>
+            <li>[ ] - Create multiple example layouts</li>
+            <li>[ ] - Create started color sets</li>
+            <li>[ ] - Add font weights and styels</li>
+            <li>[ ] - Keep a list of recent fonts and put them up top</li>
+            <li>[ ] - Save snapshots for comparisons</li>
+            <li>[ ] - URL generation to send links with settings</li>
+            <li>[ ] - Provide a stylesheet with the settings</li>
+            <li>[ ] - Add hex values</li>
+            <li>[ ] - Prevent movement in selection column</li>
+            <li>[ ] - Align font selector under text box</li>
+            <li>[ ] - Reimplement swap between body and text, etc...</li>
+            <li>
+              Setup so there is just one handler for the input. (instead of a
+              separate one for the handleColorChange)
+            </li>
+            <li>
+              Figure out the bug in Safari where if you open the color picker
+              and close it without making a change and the click the up/down
+              errors the page freaks out and reloads.
+            </li>
+            <li>
+              Similar problem is if you open the color picker then click on the
+              update arrow before closing it
+            </li>
+            <li>Put stuff in local storage so it's there when you come back</li>
+            <li>See how the color picker works in different browsers</li>
+            <li>Print out a stylesheet with the values</li>
+            <li>Add fonts</li>
+            <li>Put in level to headers</li>
+            <li>Add button to link level on and level 2 headers</li>
+            <li>Make an optional accent color area?</li>
+            <li>Add existing color pallets to click on and setup</li>
+            <li>Add buttons to swap colors up and down</li>
+          </ul>
         </div>
-        <div>
-          <button id="move--background--text">&#8657; &#8659;</button>
-        </div>
 
         <div>
-          <input type="color" id="css--text--picker" value="#b8c1ec" />
-          <input type="text" id="css--text--string" size="7" value="#b8c1ec" />
-          <label for="css--text--string">Text</label>
+          <h5>Background</h5>
+          <hsla-picker
+            id="background-color-picker"
+            h="88"
+            s="54"
+            l="9"
+            a="1"
+          ></hsla-picker>
 
+          <h5>Body Text</h5>
+          <hsla-picker
+            id="text-color-picker"
+            h="100"
+            s="28"
+            l="45"
+          ></hsla-picker>
           <strict-select>
             <option value="roboto">Roboto</option>
             <option value="opensans">Open Sans</option>
@@ -1688,74 +1739,12 @@
             <option value="notosansmanichaean">Noto Sans Manichaean</option>
             <option value="notosanslepcha">Noto Sans Lepcha</option>
           </strict-select>
-        </div>
 
-        <div>
-          <button id="move--text--header">&#8657; &#8659;</button>
-        </div>
+          <input type="text" id="background-color-string" />
 
-        <div>
-          <input type="color" id="css--header--picker" value="#fffffe" />
-          <input
-            type="text"
-            id="css--header--string"
-            size="7"
-            value="#fffffe"
-          />
-          <label for="css--header--string">Headers</label>
-        </div>
-        <div>
-          <button id="move--header--links">&#8657; &#8659;</button>
-        </div>
-        <div>
-          <input type="color" id="css--links--picker" value="#eebbc3" />
-          <input type="text" id="css--links--string" size="7" value="#eebbc3" />
-          <label for="css--links--string">Links</label>
+          <input type="text" id="text-color-string" />
         </div>
       </div>
-      <p>
-        TODO: Add note to prototype about display inline being used to prevent
-        perceived bug where if you click on the invisile part of the div that
-        spans the page it doesn't close the selection box
-      </p>
-      <p>
-        TODO: Add note about options being sent in with display none so they can
-        feed the menu without showing up at first.
-      </p>
-
-      <h3>TODO List (in no particular order):</h3>
-
-      <ul>
-        <li>[ ] - Add font weights and styels</li>
-        <li>[ ] - Keep a list of recent fonts and put them up top</li>
-        <li>[ ] - Save snapshots for comparisons</li>
-        <li>[ ] - URL generation to send links with settings</li>
-        <li>[ ] - Provide a stylesheet with the settings</li>
-        <li>[ ] - Add hex values</li>
-        <li>
-          Setup so there is just one handler for the input. (instead of a
-          separate one for the handleColorChange)
-        </li>
-        <li>
-          Figure out the bug in Safari where if you open the color picker and
-          close it without making a change and the click the up/down errors the
-          page freaks out and reloads.
-        </li>
-        <li>
-          Similar problem is if you open the color picker then click on the
-          update arrow before closing it
-        </li>
-        <li>Put stuff in local storage so it's there when you come back</li>
-        <li>See how the color picker works in different browsers</li>
-        <li>Print out a stylesheet with the values</li>
-        <li>Add fonts</li>
-        <li>Put in level to headers</li>
-        <li>Add button to link level on and level 2 headers</li>
-        <li>Make an optional accent color area?</li>
-        <li>Add existing color pallets to click on and setup</li>
-        <li>Add buttons to swap colors up and down</li>
-      </ul>
-      <div id="debug-list"></div>
     </main>
 
     <footer>

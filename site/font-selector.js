@@ -225,7 +225,15 @@ class StrictSelect extends HTMLElement {
 customElements.define('strict-select', StrictSelect)
 
 const handleFontUpdate = (event) => {
-    console.log(event)
+    const font = event.detail.name
+    const link = document.createElement('link')
+    link.href = `https://fonts.googleapis.com/css2?family=${encodeURI(font)}`
+    link.rel = 'stylesheet'
+
+    const head = document.getElementsByTagName('head')[0]
+    head.appendChild(link)
+
+    document.body.style.fontFamily = font
 }
 
 document.addEventListener('fontupdate', handleFontUpdate)

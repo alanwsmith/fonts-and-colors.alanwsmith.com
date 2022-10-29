@@ -1,3 +1,5 @@
+import fontList from './fonts-popular.json' assert { type: 'JSON' }
+
 class StrictSelect extends HTMLElement {
     constructor() {
         super()
@@ -88,6 +90,11 @@ class StrictSelect extends HTMLElement {
             }
         }
 
+        const handleSelectInput = (event) => {
+            console.log(event.target.value)
+            sendEvent(event.target.value)
+        }
+
         // TODO: Handle escape here
         const handleSelectKeyup = (event) => {
             const keyCheck = event.key.toLowerCase()
@@ -120,16 +127,7 @@ class StrictSelect extends HTMLElement {
                     this.input.setAttribute('placeholder', this.placeholder)
                     this.input.value = ''
                     this.input.blur()
-                    this.dispatchEvent(
-                        new CustomEvent('fontupdate', {
-                            detail: {
-                                value: key,
-                                name: option.text,
-                            },
-                            composed: true,
-                            bubbles: true,
-                        })
-                    )
+                    sendEvent(key)
                 }
             }
 
@@ -163,6 +161,7 @@ class StrictSelect extends HTMLElement {
             this.select.addEventListener('keydown', handleSelectKeydown)
             this.select.addEventListener('keyup', handleSelectKeyup)
             this.select.addEventListener('mouseup', handleSelectMouseUp)
+            this.select.addEventListener('input', handleSelectInput)
             this.select.size = 5
             this.select.style.position = 'absolute'
 
@@ -177,6 +176,24 @@ class StrictSelect extends HTMLElement {
             }
 
             this.upArrowCheck = null
+        }
+
+        const sendEvent = (key) => {
+            const checkValue = key === null ? this.select.value : key
+            for (let option of this.options) {
+                if (key === option.value) {
+                    this.dispatchEvent(
+                        new CustomEvent('fontupdate', {
+                            detail: {
+                                value: key,
+                                name: option.text,
+                            },
+                            composed: true,
+                            bubbles: true,
+                        })
+                    )
+                }
+            }
         }
 
         const setSelection = (index = null) => {
@@ -225,6 +242,9 @@ class StrictSelect extends HTMLElement {
 customElements.define('strict-select', StrictSelect)
 
 const handleFontUpdate = (event) => {
+    // document.body.style.color = '#232946'
+    // document.getElementsByTagName('main')[0].style.opacity = '0.7'
+
     const font = event.detail.name
     const link = document.createElement('link')
     link.href = `https://fonts.googleapis.com/css2?family=${encodeURI(font)}`
@@ -233,7 +253,30 @@ const handleFontUpdate = (event) => {
     const head = document.getElementsByTagName('head')[0]
     head.appendChild(link)
 
-    document.body.style.fontFamily = font
+    // document.body.style.backgroundColor = '#AA0000'
+    // console.log(document.body.style.backgroundColor)
+    // document.body.style.background = '111111'
+
+    // for (const header of document.getElementsByTagName('h1')) {
+    //     header.style.color = '#232946'
+    // }
+
+    // was trying to wait until the font was loaded
+    // before making the change, but this is'nt working
+    document.fonts.load(`18px '${font}'`).then(() => {
+        console.log(document.fonts.check("12px 'ASDFASDFMerriweatherx'"))
+        // for (const ken of document.fonts.keys()) {
+        // console.log(ken)
+        // }
+        console.log(`Ready: ${font}`)
+        document.fonts.ready.then(() => {
+            document.body.style.fontFamily = font
+            // setTimeout(() => {
+            // document.body.style.color = '#b8c1ec'
+            // document.getElementsByTagName('main')[0].style.opacity = '1'
+            // }, 100)
+        })
+    })
 }
 
 document.addEventListener('fontupdate', handleFontUpdate)

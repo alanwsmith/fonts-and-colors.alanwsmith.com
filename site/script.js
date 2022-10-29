@@ -145,7 +145,7 @@ const loadFonts = () => {
                   */
             })
 
-            log(fontMenuList)
+            // log(fontMenuList)
 
             // document.getElementById('debug-list').innerHTML = debugList
 

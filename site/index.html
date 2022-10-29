@@ -20,6 +20,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
     <link
       href="https://fonts.googleapis.com/css2?family=Fuzzy+Bubbles:wght@400;700&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
       rel="stylesheet"
@@ -36,6 +37,7 @@
       sizes="180x180"
       href="/favicons/180x180.png"
     />
+
     <style>
       body {
         background-color: #232946;
@@ -65,12 +67,14 @@
         width: 100%;
         max-width: 900px;
         margin: 0 auto;
-        height: 1.2rem;
+        height: 1.8rem;
       }
       main {
         width: 100%;
         max-width: 900px;
         margin: 0 auto;
+        opacity: 1;
+        transition: 0.05s opacity;
       }
       footer {
         width: 100%;
@@ -87,15 +91,20 @@
       .exempt-from-change {
         font-family: 'Roboto', sans-serif;
       }
-      #font-input-field {
-        background-color: white;
-        height: 1.6rem;
-        padding: 4px;
-        color: black;
+      #col-wrapper {
+        display: grid;
+        grid-template-columns: 700px 200px;
       }
     </style>
 
+    <!-- turning off colors so they don't mess
+      with fonts during dev 
     <script src="script.js"></script>
+    -->
+    <script src="font-list.js"></script>
+    <script src="font-selector.js"></script>
+    <script src="color-picker.js"></script>
+    <script src="color-listeners.js"></script>
   </head>
 
   <body>
@@ -106,86 +115,1636 @@
       <a href="https://twitter.com/TheIdOfAlan">twitter</a>
     </header>
     <main>
-      <h1 class="exempt-from-change main-header">Fonts And Colors</h1>
-      <div id="color-pickers" class="exempt-from-change">
+      <div id="col-wrapper">
         <div>
-          <input type="color" id="css--background--picker" value="#232946" />
-          <input
-            type="text"
-            id="css--background--string"
-            size="7"
-            value="#232946"
-          />
-          <label for="css--background--string">Background</label>
-        </div>
-        <div>
-          <button id="move--background--text">&#8657; &#8659;</button>
+          <h1>WORK IN PROGRESS</h1>
+          <p>
+            The basics are mostly in place, but this the first set of features
+            isn't complete yet. I'll try to keep things that are already working
+            in a good state but may have to bust some things to make progress.
+          </p>
+          <hr />
+
+          <h1 class="exempt-from-change main-header">
+            Alan's Font and Color Picker
+          </h1>
+          <p>
+            None of the tools out there let me experiment with both fonts and
+            colors on an actual content page in a way that I like. So, I built
+            this. I hope you find it useful.
+          </p>
+          <p>-a</p>
+          <p>
+            TODO: Add note to prototype about display inline being used to
+            prevent perceived bug where if you click on the invisile part of the
+            div that spans the page it doesn't close the selection box
+          </p>
+          <p>
+            TODO: Add note about options being sent in with display none so they
+            can feed the menu without showing up at first.
+          </p>
+
+          <h3>TODO List (in no particular order):</h3>
+          <ul>
+            <li>[ ] - Add content</li>
+            <li>[ ] - Add accent text or area</li>
+            <li>[ ] - Create multiple example layouts</li>
+            <li>[ ] - Create started color sets</li>
+            <li>[ ] - Add font weights and styels</li>
+            <li>[ ] - Keep a list of recent fonts and put them up top</li>
+            <li>[ ] - Save snapshots for comparisons</li>
+            <li>[ ] - URL generation to send links with settings</li>
+            <li>[ ] - Provide a stylesheet with the settings</li>
+            <li>[ ] - Add hex values</li>
+            <li>[ ] - Prevent movement in selection column</li>
+            <li>[ ] - Align font selector under text box</li>
+            <li>[ ] - Reimplement swap between body and text, etc...</li>
+            <li>
+              Setup so there is just one handler for the input. (instead of a
+              separate one for the handleColorChange)
+            </li>
+            <li>
+              Figure out the bug in Safari where if you open the color picker
+              and close it without making a change and the click the up/down
+              errors the page freaks out and reloads.
+            </li>
+            <li>
+              Similar problem is if you open the color picker then click on the
+              update arrow before closing it
+            </li>
+            <li>Put stuff in local storage so it's there when you come back</li>
+            <li>See how the color picker works in different browsers</li>
+            <li>Print out a stylesheet with the values</li>
+            <li>Add fonts</li>
+            <li>Put in level to headers</li>
+            <li>Add button to link level on and level 2 headers</li>
+            <li>Make an optional accent color area?</li>
+            <li>Add existing color pallets to click on and setup</li>
+            <li>Add buttons to swap colors up and down</li>
+          </ul>
         </div>
 
         <div>
-          <input type="color" id="css--text--picker" value="#b8c1ec" />
-          <input type="text" id="css--text--string" size="7" value="#b8c1ec" />
-          <label for="css--text--string">Text</label>
-          <div id="menuWrapper">
-            <div id="font-input-field" contenteditable="true"></div>
-          </div>
-          <datalist id="font-list--body" class="font-list"></datalist>
-        </div>
-        <div>
-          <button id="move--text--header">&#8657; &#8659;</button>
-        </div>
+          <h5>Background</h5>
+          <hsla-picker
+            id="background-color-picker"
+            h="88"
+            s="54"
+            l="9"
+            a="1"
+          ></hsla-picker>
 
-        <div>
-          <input type="color" id="css--header--picker" value="#fffffe" />
-          <input
-            type="text"
-            id="css--header--string"
-            size="7"
-            value="#fffffe"
-          />
-          <label for="css--header--string">Headers</label>
-        </div>
-        <div>
-          <button id="move--header--links">&#8657; &#8659;</button>
-        </div>
-        <div>
-          <input type="color" id="css--links--picker" value="#eebbc3" />
-          <input type="text" id="css--links--string" size="7" value="#eebbc3" />
-          <label for="css--links--string">Links</label>
+          <h5>Body Text</h5>
+          <hsla-picker
+            id="text-color-picker"
+            h="100"
+            s="28"
+            l="45"
+          ></hsla-picker>
+          <strict-select>
+            <option value="roboto">Roboto</option>
+            <option value="opensans">Open Sans</option>
+            <option value="notosansjp">Noto Sans JP</option>
+            <option value="montserrat">Montserrat</option>
+            <option value="lato">Lato</option>
+            <option value="poppins">Poppins</option>
+            <option value="sourcesanspro">Source Sans Pro</option>
+            <option value="robotocondensed">Roboto Condensed</option>
+            <option value="oswald">Oswald</option>
+            <option value="robotomono">Roboto Mono</option>
+            <option value="raleway">Raleway</option>
+            <option value="inter">Inter</option>
+            <option value="notosans">Noto Sans</option>
+            <option value="ubuntu">Ubuntu</option>
+            <option value="mukta">Mukta</option>
+            <option value="robotoslab">Roboto Slab</option>
+            <option value="nunito">Nunito</option>
+            <option value="playfairdisplay">Playfair Display</option>
+            <option value="ptsans">PT Sans</option>
+            <option value="nunitosans">Nunito Sans</option>
+            <option value="merriweather">Merriweather</option>
+            <option value="rubik">Rubik</option>
+            <option value="notosanskr">Noto Sans KR</option>
+            <option value="worksans">Work Sans</option>
+            <option value="lora">Lora</option>
+            <option value="firasans">Fira Sans</option>
+            <option value="notosanstc">Noto Sans TC</option>
+            <option value="nanumgothic">Nanum Gothic</option>
+            <option value="kanit">Kanit</option>
+            <option value="barlow">Barlow</option>
+            <option value="quicksand">Quicksand</option>
+            <option value="mulish">Mulish</option>
+            <option value="ptserif">PT Serif</option>
+            <option value="inconsolata">Inconsolata</option>
+            <option value="titilliumweb">Titillium Web</option>
+            <option value="hindsiliguri">Hind Siliguri</option>
+            <option value="notoserif">Noto Serif</option>
+            <option value="heebo">Heebo</option>
+            <option value="ibmplexsans">IBM Plex Sans</option>
+            <option value="librefranklin">Libre Franklin</option>
+            <option value="josefinsans">Josefin Sans</option>
+            <option value="karla">Karla</option>
+            <option value="dmsans">DM Sans</option>
+            <option value="arimo">Arimo</option>
+            <option value="dosis">Dosis</option>
+            <option value="ptsansnarrow">PT Sans Narrow</option>
+            <option value="librebaskerville">Libre Baskerville</option>
+            <option value="oxygen">Oxygen</option>
+            <option value="sourcecodepro">Source Code Pro</option>
+            <option value="bitter">Bitter</option>
+            <option value="cairo">Cairo</option>
+            <option value="cabin">Cabin</option>
+            <option value="anton">Anton</option>
+            <option value="notosanssc">Noto Sans SC</option>
+            <option value="sourceserifpro">Source Serif Pro</option>
+            <option value="bebasneue">Bebas Neue</option>
+            <option value="barlowcondensed">Barlow Condensed</option>
+            <option value="dancingscript">Dancing Script</option>
+            <option value="hind">Hind</option>
+            <option value="prompt">Prompt</option>
+            <option value="ebgaramond">EB Garamond</option>
+            <option value="manrope">Manrope</option>
+            <option value="signikanegative">Signika Negative</option>
+            <option value="lobster">Lobster</option>
+            <option value="abel">Abel</option>
+            <option value="mplusrounded1c">M PLUS Rounded 1c</option>
+            <option value="comfortaa">Comfortaa</option>
+            <option value="fjallaone">Fjalla One</option>
+            <option value="crimsontext">Crimson Text</option>
+            <option value="exo2">Exo 2</option>
+            <option value="pacifico">Pacifico</option>
+            <option value="varelaround">Varela Round</option>
+            <option value="mavenpro">Maven Pro</option>
+            <option value="notosanshk">Noto Sans HK</option>
+            <option value="arvo">Arvo</option>
+            <option value="notoserifjp">Noto Serif JP</option>
+            <option value="secularone">Secular One</option>
+            <option value="overpass">Overpass</option>
+            <option value="teko">Teko</option>
+            <option value="merriweathersans">Merriweather Sans</option>
+            <option value="asap">Asap</option>
+            <option value="assistant">Assistant</option>
+            <option value="jost">Jost</option>
+            <option value="questrial">Questrial</option>
+            <option value="abrilfatface">Abril Fatface</option>
+            <option value="hindmadurai">Hind Madurai</option>
+            <option value="caveat">Caveat</option>
+            <option value="publicsans">Public Sans</option>
+            <option value="archivo">Archivo</option>
+            <option value="rajdhani">Rajdhani</option>
+            <option value="shadowsintolight">Shadows Into Light</option>
+            <option value="indieflower">Indie Flower</option>
+            <option value="slabo27px">Slabo 27px</option>
+            <option value="satisfy">Satisfy</option>
+            <option value="zillaslab">Zilla Slab</option>
+            <option value="barlowsemicondensed">Barlow Semi Condensed</option>
+            <option value="yanonekaffeesatz">Yanone Kaffeesatz</option>
+            <option value="cormorantgaramond">Cormorant Garamond</option>
+            <option value="ibmplexserif">IBM Plex Serif</option>
+            <option value="firasanscondensed">Fira Sans Condensed</option>
+            <option value="catamaran">Catamaran</option>
+            <option value="redhatdisplay">Red Hat Display</option>
+            <option value="domine">Domine</option>
+            <option value="tajawal">Tajawal</option>
+            <option value="signika">Signika</option>
+            <option value="play">Play</option>
+            <option value="archivonarrow">Archivo Narrow</option>
+            <option value="abeezee">ABeeZee</option>
+            <option value="ibmplexmono">IBM Plex Mono</option>
+            <option value="acme">Acme</option>
+            <option value="permanentmarker">Permanent Marker</option>
+            <option value="exo">Exo</option>
+            <option value="nanummyeongjo">Nanum Myeongjo</option>
+            <option value="sarabun">Sarabun</option>
+            <option value="alfaslabone">Alfa Slab One</option>
+            <option value="spacegrotesk">Space Grotesk</option>
+            <option value="fredokaone">Fredoka One</option>
+            <option value="breeserif">Bree Serif</option>
+            <option value="chakrapetch">Chakra Petch</option>
+            <option value="amaticsc">Amatic SC</option>
+            <option value="sairacondensed">Saira Condensed</option>
+            <option value="mplus1p">M PLUS 1p</option>
+            <option value="vollkorn">Vollkorn</option>
+            <option value="alegreyasans">Alegreya Sans</option>
+            <option value="ubuntucondensed">Ubuntu Condensed</option>
+            <option value="alegreya">Alegreya</option>
+            <option value="righteous">Righteous</option>
+            <option value="cinzel">Cinzel</option>
+            <option value="asapcondensed">Asap Condensed</option>
+            <option value="tinos">Tinos</option>
+            <option value="russoone">Russo One</option>
+            <option value="dmserifdisplay">DM Serif Display</option>
+            <option value="didactgothic">Didact Gothic</option>
+            <option value="frankruhllibre">Frank Ruhl Libre</option>
+            <option value="kalam">Kalam</option>
+            <option value="yantramanav">Yantramanav</option>
+            <option value="amiri">Amiri</option>
+            <option value="archivoblack">Archivo Black</option>
+            <option value="creteround">Crete Round</option>
+            <option value="paytoneone">Paytone One</option>
+            <option value="lobstertwo">Lobster Two</option>
+            <option value="baloo2">Baloo 2</option>
+            <option value="almarai">Almarai</option>
+            <option value="courgette">Courgette</option>
+            <option value="patuaone">Patua One</option>
+            <option value="notosansarabic">Noto Sans Arabic</option>
+            <option value="francoisone">Francois One</option>
+            <option value="greatvibes">Great Vibes</option>
+            <option value="martel">Martel</option>
+            <option value="notokufiarabic">Noto Kufi Arabic</option>
+            <option value="rokkitt">Rokkitt</option>
+            <option value="spacemono">Space Mono</option>
+            <option value="ptsanscaption">PT Sans Caption</option>
+            <option value="cardo">Cardo</option>
+            <option value="prata">Prata</option>
+            <option value="spectral">Spectral</option>
+            <option value="anticslab">Antic Slab</option>
+            <option value="noticiatext">Noticia Text</option>
+            <option value="cormorant">Cormorant</option>
+            <option value="notoseriftc">Noto Serif TC</option>
+            <option value="encodesans">Encode Sans</option>
+            <option value="oldstandardtt">Old Standard TT</option>
+            <option value="passionone">Passion One</option>
+            <option value="changa">Changa</option>
+            <option value="kaushanscript">Kaushan Script</option>
+            <option value="yellowtail">Yellowtail</option>
+            <option value="alata">Alata</option>
+            <option value="notosansdisplay">Noto Sans Display</option>
+            <option value="marcellus">Marcellus</option>
+            <option value="patrickhand">Patrick Hand</option>
+            <option value="luckiestguy">Luckiest Guy</option>
+            <option value="cookie">Cookie</option>
+            <option value="playfairdisplaysc">Playfair Display SC</option>
+            <option value="orbitron">Orbitron</option>
+            <option value="chivo">Chivo</option>
+            <option value="newscycle">News Cycle</option>
+            <option value="michroma">Michroma</option>
+            <option value="sora">Sora</option>
+            <option value="montserratalternates">Montserrat Alternates</option>
+            <option value="lexenddeca">Lexend Deca</option>
+            <option value="concertone">Concert One</option>
+            <option value="yesevaone">Yeseva One</option>
+            <option value="saira">Saira</option>
+            <option value="titanone">Titan One</option>
+            <option value="unna">Unna</option>
+            <option value="sawarabimincho">Sawarabi Mincho</option>
+            <option value="quattrocentosans">Quattrocento Sans</option>
+            <option value="gothica1">Gothic A1</option>
+            <option value="philosopher">Philosopher</option>
+            <option value="ptmono">PT Mono</option>
+            <option value="sacramento">Sacramento</option>
+            <option value="gloriahallelujah">Gloria Hallelujah</option>
+            <option value="pathwaygothicone">Pathway Gothic One</option>
+            <option value="mali">Mali</option>
+            <option value="lexend">Lexend</option>
+            <option value="gelasio">Gelasio</option>
+            <option value="josefinslab">Josefin Slab</option>
+            <option value="sen">Sen</option>
+            <option value="cuprum">Cuprum</option>
+            <option value="faustina">Faustina</option>
+            <option value="adventpro">Advent Pro</option>
+            <option value="pressstart2p">Press Start 2P</option>
+            <option value="cantarell">Cantarell</option>
+            <option value="quattrocento">Quattrocento</option>
+            <option value="notoserifkr">Noto Serif KR</option>
+            <option value="outfit">Outfit</option>
+            <option value="poiretone">Poiret One</option>
+            <option value="carterone">Carter One</option>
+            <option value="staatliches">Staatliches</option>
+            <option value="lilitaone">Lilita One</option>
+            <option value="eczar">Eczar</option>
+            <option value="mitr">Mitr</option>
+            <option value="handlee">Handlee</option>
+            <option value="ropasans">Ropa Sans</option>
+            <option value="alice">Alice</option>
+            <option value="monda">Monda</option>
+            <option value="elmessiri">El Messiri</option>
+            <option value="ultra">Ultra</option>
+            <option value="urbanist">Urbanist</option>
+            <option value="firasansextracondensed">
+              Fira Sans Extra Condensed
+            </option>
+            <option value="specialelite">Special Elite</option>
+            <option value="commissioner">Commissioner</option>
+            <option value="khand">Khand</option>
+            <option value="sawarabigothic">Sawarabi Gothic</option>
+            <option value="padauk">Padauk</option>
+            <option value="crimsonpro">Crimson Pro</option>
+            <option value="aleo">Aleo</option>
+            <option value="vidaloka">Vidaloka</option>
+            <option value="taviraj">Taviraj</option>
+            <option value="encodesanscondensed">Encode Sans Condensed</option>
+            <option value="marckscript">Marck Script</option>
+            <option value="creepster">Creepster</option>
+            <option value="macondo">Macondo</option>
+            <option value="bangers">Bangers</option>
+            <option value="neuton">Neuton</option>
+            <option value="architectsdaughter">Architects Daughter</option>
+            <option value="playball">Playball</option>
+            <option value="muktamalar">Mukta Malar</option>
+            <option value="neucha">Neucha</option>
+            <option value="ubuntumono">Ubuntu Mono</option>
+            <option value="ibmplexsansarabic">IBM Plex Sans Arabic</option>
+            <option value="mrdafoe">Mr Dafoe</option>
+            <option value="arsenal">Arsenal</option>
+            <option value="fugazone">Fugaz One</option>
+            <option value="forum">Forum</option>
+            <option value="homemadeapple">Homemade Apple</option>
+            <option value="tangerine">Tangerine</option>
+            <option value="volkhov">Volkhov</option>
+            <option value="parisienne">Parisienne</option>
+            <option value="oleoscript">Oleo Script</option>
+            <option value="istokweb">Istok Web</option>
+            <option value="ibmplexsanscondensed">
+              IBM Plex Sans Condensed
+            </option>
+            <option value="sairasemicondensed">Saira Semi Condensed</option>
+            <option value="notoserifsc">Noto Serif SC</option>
+            <option value="bungee">Bungee</option>
+            <option value="actor">Actor</option>
+            <option value="averagesans">Average Sans</option>
+            <option value="amaranth">Amaranth</option>
+            <option value="allura">Allura</option>
+            <option value="merienda">Merienda</option>
+            <option value="hindvadodara">Hind Vadodara</option>
+            <option value="sriracha">Sriracha</option>
+            <option value="monoton">Monoton</option>
+            <option value="sanchez">Sanchez</option>
+            <option value="nanumgothiccoding">Nanum Gothic Coding</option>
+            <option value="hammersmithone">Hammersmith One</option>
+            <option value="viga">Viga</option>
+            <option value="ruda">Ruda</option>
+            <option value="ramabhadra">Ramabhadra</option>
+            <option value="lusitana">Lusitana</option>
+            <option value="palanquin">Palanquin</option>
+            <option value="bodonimoda">Bodoni Moda</option>
+            <option value="adamina">Adamina</option>
+            <option value="khula">Khula</option>
+            <option value="alegreyasanssc">Alegreya Sans SC</option>
+            <option value="kosugimaru">Kosugi Maru</option>
+            <option value="gudea">Gudea</option>
+            <option value="cousine">Cousine</option>
+            <option value="sortsmillgoudy">Sorts Mill Goudy</option>
+            <option value="bevietnampro">Be Vietnam Pro</option>
+            <option value="mada">Mada</option>
+            <option value="literata">Literata</option>
+            <option value="nanumpenscript">Nanum Pen Script</option>
+            <option value="notosansthai">Noto Sans Thai</option>
+            <option value="quantico">Quantico</option>
+            <option value="unicaone">Unica One</option>
+            <option value="cabincondensed">Cabin Condensed</option>
+            <option value="jura">Jura</option>
+            <option value="blackhansans">Black Han Sans</option>
+            <option value="rocksalt">Rock Salt</option>
+            <option value="rubikmonoone">Rubik Mono One</option>
+            <option value="gruppo">Gruppo</option>
+            <option value="baijamjuree">Bai Jamjuree</option>
+            <option value="sigmarone">Sigmar One</option>
+            <option value="caveatbrush">Caveat Brush</option>
+            <option value="alexbrush">Alex Brush</option>
+            <option value="antonio">Antonio</option>
+            <option value="notonaskharabic">Noto Naskh Arabic</option>
+            <option value="redhattext">Red Hat Text</option>
+            <option value="laila">Laila</option>
+            <option value="benchnine">BenchNine</option>
+            <option value="dmseriftext">DM Serif Text</option>
+            <option value="pragatinarrow">Pragati Narrow</option>
+            <option value="plusjakartasans">Plus Jakarta Sans</option>
+            <option value="tenorsans">Tenor Sans</option>
+            <option value="audiowide">Audiowide</option>
+            <option value="blinker">Blinker</option>
+            <option value="cantataone">Cantata One</option>
+            <option value="abhayalibre">Abhaya Libre</option>
+            <option value="juliussansone">Julius Sans One</option>
+            <option value="baskervville">Baskervville</option>
+            <option value="berkshireswash">Berkshire Swash</option>
+            <option value="pangolin">Pangolin</option>
+            <option value="badscript">Bad Script</option>
+            <option value="allertastencil">Allerta Stencil</option>
+            <option value="blackopsone">Black Ops One</option>
+            <option value="damion">Damion</option>
+            <option value="shrikhand">Shrikhand</option>
+            <option value="alef">Alef</option>
+            <option value="gentiumbookbasic">Gentium Book Basic</option>
+            <option value="pontanosans">Pontano Sans</option>
+            <option value="sharetechmono">Share Tech Mono</option>
+            <option value="robotoflex">Roboto Flex</option>
+            <option value="economica">Economica</option>
+            <option value="sarala">Sarala</option>
+            <option value="hindguntur">Hind Guntur</option>
+            <option value="varela">Varela</option>
+            <option value="electrolize">Electrolize</option>
+            <option value="glegoo">Glegoo</option>
+            <option value="syncopate">Syncopate</option>
+            <option value="aclonica">Aclonica</option>
+            <option value="castoro">Castoro</option>
+            <option value="martelsans">Martel Sans</option>
+            <option value="sintony">Sintony</option>
+            <option value="firamono">Fira Mono</option>
+            <option value="nothingyoucoulddo">Nothing You Could Do</option>
+            <option value="itim">Itim</option>
+            <option value="rufina">Rufina</option>
+            <option value="lalezar">Lalezar</option>
+            <option value="notosanstamil">Noto Sans Tamil</option>
+            <option value="sourceserif4">Source Serif 4</option>
+            <option value="krub">Krub</option>
+            <option value="reeniebeanie">Reenie Beanie</option>
+            <option value="niramit">Niramit</option>
+            <option value="allerta">Allerta</option>
+            <option value="antic">Antic</option>
+            <option value="sansita">Sansita</option>
+            <option value="armata">Armata</option>
+            <option value="arapey">Arapey</option>
+            <option value="courierprime">Courier Prime</option>
+            <option value="coveredbyyourgrace">Covered By Your Grace</option>
+            <option value="k2d">K2D</option>
+            <option value="chewy">Chewy</option>
+            <option value="stintultracondensed">Stint Ultra Condensed</option>
+            <option value="lemonada">Lemonada</option>
+            <option value="yrsa">Yrsa</option>
+            <option value="alatsi">Alatsi</option>
+            <option value="karma">Karma</option>
+            <option value="athiti">Athiti</option>
+            <option value="anonymouspro">Anonymous Pro</option>
+            <option value="kumbhsans">Kumbh Sans</option>
+            <option value="sixcaps">Six Caps</option>
+            <option value="pridi">Pridi</option>
+            <option value="basic">Basic</option>
+            <option value="bowlbyonesc">Bowlby One SC</option>
+            <option value="italianno">Italianno</option>
+            <option value="rancho">Rancho</option>
+            <option value="kreon">Kreon</option>
+            <option value="readexpro">Readex Pro</option>
+            <option value="epilogue">Epilogue</option>
+            <option value="londrinasolid">Londrina Solid</option>
+            <option value="shadowsintolighttwo">Shadows Into Light Two</option>
+            <option value="notosansmono">Noto Sans Mono</option>
+            <option value="jaldi">Jaldi</option>
+            <option value="sourcesans3">Source Sans 3</option>
+            <option value="carroisgothic">Carrois Gothic</option>
+            <option value="palanquindark">Palanquin Dark</option>
+            <option value="cambay">Cambay</option>
+            <option value="enriqueta">Enriqueta</option>
+            <option value="leaguespartan">League Spartan</option>
+            <option value="comicneue">Comic Neue</option>
+            <option value="pinyonscript">Pinyon Script</option>
+            <option value="coda">Coda</option>
+            <option value="ptserifcaption">PT Serif Caption</option>
+            <option value="firacode">Fira Code</option>
+            <option value="frederickathegreat">Fredericka the Great</option>
+            <option value="zenmarugothic">Zen Maru Gothic</option>
+            <option value="kameron">Kameron</option>
+            <option value="cutivemono">Cutive Mono</option>
+            <option value="cabinsketch">Cabin Sketch</option>
+            <option value="leckerlione">Leckerli One</option>
+            <option value="judson">Judson</option>
+            <option value="gochihand">Gochi Hand</option>
+            <option value="markazitext">Markazi Text</option>
+            <option value="vt323">VT323</option>
+            <option value="rambla">Rambla</option>
+            <option value="spinnaker">Spinnaker</option>
+            <option value="librecaslontext">Libre Caslon Text</option>
+            <option value="norican">Norican</option>
+            <option value="comingsoon">Coming Soon</option>
+            <option value="jua">Jua</option>
+            <option value="annieuseyourtelescope">
+              Annie Use Your Telescope
+            </option>
+            <option value="racingsansone">Racing Sans One</option>
+            <option value="arimamadurai">Arima Madurai</option>
+            <option value="fraunces">Fraunces</option>
+            <option value="telex">Telex</option>
+            <option value="gildadisplay">Gilda Display</option>
+            <option value="nanumbrushscript">Nanum Brush Script</option>
+            <option value="shortstack">Short Stack</option>
+            <option value="boogaloo">Boogaloo</option>
+            <option value="atkinsonhyperlegible">Atkinson Hyperlegible</option>
+            <option value="squadaone">Squada One</option>
+            <option value="candal">Candal</option>
+            <option value="manjari">Manjari</option>
+            <option value="overlock">Overlock</option>
+            <option value="rozhaone">Rozha One</option>
+            <option value="changaone">Changa One</option>
+            <option value="mrssaintdelafield">Mrs Saint Delafield</option>
+            <option value="herrvonmuellerhoff">Herr Von Muellerhoff</option>
+            <option value="notosansmalayalam">Noto Sans Malayalam</option>
+            <option value="voltaire">Voltaire</option>
+            <option value="graduate">Graduate</option>
+            <option value="sairaextracondensed">Saira Extra Condensed</option>
+            <option value="notosansdevanagari">Noto Sans Devanagari</option>
+            <option value="holtwoodonesc">Holtwood One SC</option>
+            <option value="aldrich">Aldrich</option>
+            <option value="caladea">Caladea</option>
+            <option value="biryani">Biryani</option>
+            <option value="amita">Amita</option>
+            <option value="rye">Rye</option>
+            <option value="mate">Mate</option>
+            <option value="darkergrotesque">Darker Grotesque</option>
+            <option value="shipporimincho">Shippori Mincho</option>
+            <option value="jetbrainsmono">JetBrains Mono</option>
+            <option value="niconne">Niconne</option>
+            <option value="capriola">Capriola</option>
+            <option value="bevan">Bevan</option>
+            <option value="reemkufi">Reem Kufi</option>
+            <option value="caudex">Caudex</option>
+            <option value="rochester">Rochester</option>
+            <option value="cinzeldecorative">Cinzel Decorative</option>
+            <option value="librebarcode39">Libre Barcode 39</option>
+            <option value="fresca">Fresca</option>
+            <option value="justanotherhand">Just Another Hand</option>
+            <option value="alike">Alike</option>
+            <option value="mandali">Mandali</option>
+            <option value="sofia">Sofia</option>
+            <option value="belleza">Belleza</option>
+            <option value="arizonia">Arizonia</option>
+            <option value="balsamiqsans">Balsamiq Sans</option>
+            <option value="charm">Charm</option>
+            <option value="scada">Scada</option>
+            <option value="zenkakugothicnew">Zen Kaku Gothic New</option>
+            <option value="average">Average</option>
+            <option value="rammettoone">Rammetto One</option>
+            <option value="syne">Syne</option>
+            <option value="delius">Delius</option>
+            <option value="suezone">Suez One</option>
+            <option value="lateef">Lateef</option>
+            <option value="marcellussc">Marcellus SC</option>
+            <option value="trocchi">Trocchi</option>
+            <option value="labelleaurore">La Belle Aurore</option>
+            <option value="daysone">Days One</option>
+            <option value="quintessential">Quintessential</option>
+            <option value="stixtwotext">STIX Two Text</option>
+            <option value="miriamlibre">Miriam Libre</option>
+            <option value="kristi">Kristi</option>
+            <option value="notoserifdisplay">Noto Serif Display</option>
+            <option value="pattaya">Pattaya</option>
+            <option value="oranienbaum">Oranienbaum</option>
+            <option value="cormorantinfant">Cormorant Infant</option>
+            <option value="bubblegumsans">Bubblegum Sans</option>
+            <option value="corben">Corben</option>
+            <option value="biorhyme">BioRhyme</option>
+            <option value="magra">Magra</option>
+            <option value="knewave">Knewave</option>
+            <option value="bungeeinline">Bungee Inline</option>
+            <option value="hennypenny">Henny Penny</option>
+            <option value="nobile">Nobile</option>
+            <option value="arbutusslab">Arbutus Slab</option>
+            <option value="yesteryear">Yesteryear</option>
+            <option value="gfsdidot">GFS Didot</option>
+            <option value="qwigley">Qwigley</option>
+            <option value="leaguegothic">League Gothic</option>
+            <option value="skranji">Skranji</option>
+            <option value="contrailone">Contrail One</option>
+            <option value="trirong">Trirong</option>
+            <option value="nixieone">Nixie One</option>
+            <option value="cedarvillecursive">Cedarville Cursive</option>
+            <option value="muktavaani">Mukta Vaani</option>
+            <option value="halant">Halant</option>
+            <option value="seaweedscript">Seaweed Script</option>
+            <option value="monsieurladoulaise">Monsieur La Doulaise</option>
+            <option value="alegreyasc">Alegreya SC</option>
+            <option value="kiteone">Kite One</option>
+            <option value="lustria">Lustria</option>
+            <option value="podkova">Podkova</option>
+            <option value="georama">Georama</option>
+            <option value="calistoga">Calistoga</option>
+            <option value="overpassmono">Overpass Mono</option>
+            <option value="suranna">Suranna</option>
+            <option value="ntr">NTR</option>
+            <option value="esteban">Esteban</option>
+            <option value="amiko">Amiko</option>
+            <option value="inder">Inder</option>
+            <option value="chonburi">Chonburi</option>
+            <option value="dohyeon">Do Hyeon</option>
+            <option value="notosanshebrew">Noto Sans Hebrew</option>
+            <option value="koulen">Koulen</option>
+            <option value="bellefair">Bellefair</option>
+            <option value="amethysta">Amethysta</option>
+            <option value="tillana">Tillana</option>
+            <option value="ovo">Ovo</option>
+            <option value="maitree">Maitree</option>
+            <option value="prozalibre">Proza Libre</option>
+            <option value="grandhotel">Grand Hotel</option>
+            <option value="rosario">Rosario</option>
+            <option value="bigshouldersdisplay">Big Shoulders Display</option>
+            <option value="yatraone">Yatra One</option>
+            <option value="petitformalscript">Petit Formal Script</option>
+            <option value="molengo">Molengo</option>
+            <option value="grandstander">Grandstander</option>
+            <option value="imfellenglishsc">IM Fell English SC</option>
+            <option value="coustard">Coustard</option>
+            <option value="livvic">Livvic</option>
+            <option value="matesc">Mate SC</option>
+            <option value="kosugi">Kosugi</option>
+            <option value="slabo13px">Slabo 13px</option>
+            <option value="balootamma2">Baloo Tamma 2</option>
+            <option value="faunaone">Fauna One</option>
+            <option value="wallpoet">Wallpoet</option>
+            <option value="averiaseriflibre">Averia Serif Libre</option>
+            <option value="dmmono">DM Mono</option>
+            <option value="calligraffitti">Calligraffitti</option>
+            <option value="pirataone">Pirata One</option>
+            <option value="kronaone">Krona One</option>
+            <option value="notoserifbengali">Noto Serif Bengali</option>
+            <option value="grapenuts">Grape Nuts</option>
+            <option value="sunflower">Sunflower</option>
+            <option value="bowlbyone">Bowlby One</option>
+            <option value="jockeyone">Jockey One</option>
+            <option value="averialibre">Averia Libre</option>
+            <option value="fjordone">Fjord One</option>
+            <option value="notosansbengali">Noto Sans Bengali</option>
+            <option value="oleoscriptswashcaps">Oleo Script Swash Caps</option>
+            <option value="meriendaone">Merienda One</option>
+            <option value="thasadith">Thasadith</option>
+            <option value="kurale">Kurale</option>
+            <option value="waitingforthesunrise">
+              Waiting for the Sunrise
+            </option>
+            <option value="davidlibre">David Libre</option>
+            <option value="heptaslab">Hepta Slab</option>
+            <option value="share">Share</option>
+            <option value="sniglet">Sniglet</option>
+            <option value="dongle">Dongle</option>
+            <option value="kellyslab">Kelly Slab</option>
+            <option value="unifrakturmaguntia">UnifrakturMaguntia</option>
+            <option value="bungeeshade">Bungee Shade</option>
+            <option value="arya">Arya</option>
+            <option value="marmelad">Marmelad</option>
+            <option value="schoolbell">Schoolbell</option>
+            <option value="notosanstelugu">Noto Sans Telugu</option>
+            <option value="vazirmatn">Vazirmatn</option>
+            <option value="copse">Copse</option>
+            <option value="oxygenmono">Oxygen Mono</option>
+            <option value="marvel">Marvel</option>
+            <option value="aladin">Aladin</option>
+            <option value="kiwimaru">Kiwi Maru</option>
+            <option value="imfellenglish">IM Fell English</option>
+            <option value="dawningofanewday">Dawning of a New Day</option>
+            <option value="lemon">Lemon</option>
+            <option value="metrophobic">Metrophobic</option>
+            <option value="kadwa">Kadwa</option>
+            <option value="robotoserif">Roboto Serif</option>
+            <option value="baloothambi2">Baloo Thambi 2</option>
+            <option value="rasa">Rasa</option>
+            <option value="durusans">Duru Sans</option>
+            <option value="newsreader">Newsreader</option>
+            <option value="radley">Radley</option>
+            <option value="brawler">Brawler</option>
+            <option value="cutive">Cutive</option>
+            <option value="goudybookletter1911">Goudy Bookletter 1911</option>
+            <option value="hanuman">Hanuman</option>
+            <option value="novamono">Nova Mono</option>
+            <option value="limelight">Limelight</option>
+            <option value="pompiere">Pompiere</option>
+            <option value="grenzegotisch">Grenze Gotisch</option>
+            <option value="rubikmoonrocks">Rubik Moonrocks</option>
+            <option value="stardosstencil">Stardos Stencil</option>
+            <option value="gugi">Gugi</option>
+            <option value="loveyalikeasister">Love Ya Like A Sister</option>
+            <option value="bentham">Bentham</option>
+            <option value="imfelldwpica">IM Fell DW Pica</option>
+            <option value="mousememoirs">Mouse Memoirs</option>
+            <option value="baloochettan2">Baloo Chettan 2</option>
+            <option value="mallanna">Mallanna</option>
+            <option value="freehand">Freehand</option>
+            <option value="oxanium">Oxanium</option>
+            <option value="mrdehaviland">Mr De Haviland</option>
+            <option value="bigshoulderstext">Big Shoulders Text</option>
+            <option value="fanwoodtext">Fanwood Text</option>
+            <option value="b612">B612</option>
+            <option value="montez">Montez</option>
+            <option value="chelseamarket">Chelsea Market</option>
+            <option value="orienta">Orienta</option>
+            <option value="delagothicone">Dela Gothic One</option>
+            <option value="vesperlibre">Vesper Libre</option>
+            <option value="turretroad">Turret Road</option>
+            <option value="allan">Allan</option>
+            <option value="cormorantupright">Cormorant Upright</option>
+            <option value="fasthand">Fasthand</option>
+            <option value="oregano">Oregano</option>
+            <option value="voces">Voces</option>
+            <option value="gayathri">Gayathri</option>
+            <option value="quando">Quando</option>
+            <option value="mirza">Mirza</option>
+            <option value="anektelugu">Anek Telugu</option>
+            <option value="mclaren">McLaren</option>
+            <option value="cormorantsc">Cormorant SC</option>
+            <option value="pollerone">Poller One</option>
+            <option value="fahkwang">Fahkwang</option>
+            <option value="farro">Farro</option>
+            <option value="sansitaswashed">Sansita Swashed</option>
+            <option value="spectralsc">Spectral SC</option>
+            <option value="gravitasone">Gravitas One</option>
+            <option value="balooda2">Baloo Da 2</option>
+            <option value="expletussans">Expletus Sans</option>
+            <option value="rocknrollone">RocknRoll One</option>
+            <option value="patrickhandsc">Patrick Hand SC</option>
+            <option value="sedgwickave">Sedgwick Ave</option>
+            <option value="fondamento">Fondamento</option>
+            <option value="uncialantiqua">Uncial Antiqua</option>
+            <option value="zeyada">Zeyada</option>
+            <option value="sueellenfrancisco">Sue Ellen Francisco</option>
+            <option value="encodesanssemicondensed">
+              Encode Sans Semi Condensed
+            </option>
+            <option value="gabriela">Gabriela</option>
+            <option value="irishgrover">Irish Grover</option>
+            <option value="mashanzheng">Ma Shan Zheng</option>
+            <option value="tauri">Tauri</option>
+            <option value="fuzzybubbles">Fuzzy Bubbles</option>
+            <option value="vollkornsc">Vollkorn SC</option>
+            <option value="euphoriascript">Euphoria Script</option>
+            <option value="inknutantiqua">Inknut Antiqua</option>
+            <option value="carme">Carme</option>
+            <option value="meddon">Meddon</option>
+            <option value="petrona">Petrona</option>
+            <option value="poly">Poly</option>
+            <option value="notosanskannada">Noto Sans Kannada</option>
+            <option value="emilyscandy">Emilys Candy</option>
+            <option value="megrim">Megrim</option>
+            <option value="andika">Andika</option>
+            <option value="harmattan">Harmattan</option>
+            <option value="dellarespira">Della Respira</option>
+            <option value="arefruqaa">Aref Ruqaa</option>
+            <option value="italiana">Italiana</option>
+            <option value="mansalva">Mansalva</option>
+            <option value="buenard">Buenard</option>
+            <option value="gurajada">Gurajada</option>
+            <option value="zcoolqingkehuangyou">ZCOOL QingKe HuangYou</option>
+            <option value="koho">KoHo</option>
+            <option value="ralewaydots">Raleway Dots</option>
+            <option value="federo">Federo</option>
+            <option value="rougescript">Rouge Script</option>
+            <option value="baloopaaji2">Baloo Paaji 2</option>
+            <option value="cambo">Cambo</option>
+            <option value="ranchers">Ranchers</option>
+            <option value="convergence">Convergence</option>
+            <option value="anticdidone">Antic Didone</option>
+            <option value="viaodalibre">Viaoda Libre</option>
+            <option value="originalsurfer">Original Surfer</option>
+            <option value="happymonkey">Happy Monkey</option>
+            <option value="sharetech">Share Tech</option>
+            <option value="zenkakugothicantique">
+              Zen Kaku Gothic Antique
+            </option>
+            <option value="tenaliramakrishna">Tenali Ramakrishna</option>
+            <option value="shipporiminchob1">Shippori Mincho B1</option>
+            <option value="atma">Atma</option>
+            <option value="imfelldoublepica">IM Fell Double Pica</option>
+            <option value="notosansgujarati">Noto Sans Gujarati</option>
+            <option value="alikeangular">Alike Angular</option>
+            <option value="notosansoriya">Noto Sans Oriya</option>
+            <option value="sairastencilone">Saira Stencil One</option>
+            <option value="ooohbaby">Oooh Baby</option>
+            <option value="bellotatext">Bellota Text</option>
+            <option value="ibmplexsansthai">IBM Plex Sans Thai</option>
+            <option value="akshar">Akshar</option>
+            <option value="notosansgurmukhi">Noto Sans Gurmukhi</option>
+            <option value="allison">Allison</option>
+            <option value="odibeesans">Odibee Sans</option>
+            <option value="battambang">Battambang</option>
+            <option value="montserratsubrayada">Montserrat Subrayada</option>
+            <option value="dokdo">Dokdo</option>
+            <option value="pavanam">Pavanam</option>
+            <option value="montaga">Montaga</option>
+            <option value="cevicheone">Ceviche One</option>
+            <option value="anaheim">Anaheim</option>
+            <option value="numans">Numans</option>
+            <option value="kodchasan">Kodchasan</option>
+            <option value="supermercadoone">Supermercado One</option>
+            <option value="zcoolxiaowei">ZCOOL XiaoWei</option>
+            <option value="goblinone">Goblin One</option>
+            <option value="reggaeone">Reggae One</option>
+            <option value="rakkas">Rakkas</option>
+            <option value="aguafinascript">Aguafina Script</option>
+            <option value="modak">Modak</option>
+            <option value="freckleface">Freckle Face</option>
+            <option value="homenaje">Homenaje</option>
+            <option value="dotgothic16">DotGothic16</option>
+            <option value="fasterone">Faster One</option>
+            <option value="metamorphous">Metamorphous</option>
+            <option value="shojumaru">Shojumaru</option>
+            <option value="lexendzetta">Lexend Zetta</option>
+            <option value="notable">Notable</option>
+            <option value="silkscreen">Silkscreen</option>
+            <option value="inriaserif">Inria Serif</option>
+            <option value="elsie">Elsie</option>
+            <option value="trykker">Trykker</option>
+            <option value="geo">Geo</option>
+            <option value="baumans">Baumans</option>
+            <option value="ledger">Ledger</option>
+            <option value="ibmplexsanskr">IBM Plex Sans KR</option>
+            <option value="coiny">Coiny</option>
+            <option value="gamjaflower">Gamja Flower</option>
+            <option value="tienne">Tienne</option>
+            <option value="librebodoni">Libre Bodoni</option>
+            <option value="majormonodisplay">Major Mono Display</option>
+            <option value="giveyouglory">Give You Glory</option>
+            <option value="anekmalayalam">Anek Malayalam</option>
+            <option value="encodesansexpanded">Encode Sans Expanded</option>
+            <option value="galada">Galada</option>
+            <option value="himelody">Hi Melody</option>
+            <option value="doppioone">Doppio One</option>
+            <option value="librecaslondisplay">Libre Caslon Display</option>
+            <option value="notosanssinhala">Noto Sans Sinhala</option>
+            <option value="fingerpaint">Finger Paint</option>
+            <option value="sail">Sail</option>
+            <option value="flamenco">Flamenco</option>
+            <option value="vastshadow">Vast Shadow</option>
+            <option value="prostoone">Prosto One</option>
+            <option value="asul">Asul</option>
+            <option value="b612mono">B612 Mono</option>
+            <option value="ibarrarealnova">Ibarra Real Nova</option>
+            <option value="clickerscript">Clicker Script</option>
+            <option value="albertsans">Albert Sans</option>
+            <option value="walterturncoat">Walter Turncoat</option>
+            <option value="shalimar">Shalimar</option>
+            <option value="belgrano">Belgrano</option>
+            <option value="katibeh">Katibeh</option>
+            <option value="encodesanssemiexpanded">
+              Encode Sans Semi Expanded
+            </option>
+            <option value="zenoldmincho">Zen Old Mincho</option>
+            <option value="fredoka">Fredoka</option>
+            <option value="averiasanslibre">Averia Sans Libre</option>
+            <option value="headlandone">Headland One</option>
+            <option value="recursive">Recursive</option>
+            <option value="balthazar">Balthazar</option>
+            <option value="notonastaliqurdu">Noto Nastaliq Urdu</option>
+            <option value="iceland">Iceland</option>
+            <option value="besley">Besley</option>
+            <option value="brygada1918">Brygada 1918</option>
+            <option value="lilyscriptone">Lily Script One</option>
+            <option value="bilboswashcaps">Bilbo Swash Caps</option>
+            <option value="tirokannada">Tiro Kannada</option>
+            <option value="salsa">Salsa</option>
+            <option value="artifika">Artifika</option>
+            <option value="bubblerone">Bubbler One</option>
+            <option value="lekton">Lekton</option>
+            <option value="meerainimai">Meera Inimai</option>
+            <option value="chauphilomeneone">Chau Philomene One</option>
+            <option value="overtherainbow">Over the Rainbow</option>
+            <option value="eater">Eater</option>
+            <option value="ruslandisplay">Ruslan Display</option>
+            <option value="timmana">Timmana</option>
+            <option value="peralta">Peralta</option>
+            <option value="wendyone">Wendy One</option>
+            <option value="baloobhai2">Baloo Bhai 2</option>
+            <option value="bizudpgothic">BIZ UDPGothic</option>
+            <option value="englebert">Englebert</option>
+            <option value="sarpanch">Sarpanch</option>
+            <option value="librebarcode39text">Libre Barcode 39 Text</option>
+            <option value="craftygirls">Crafty Girls</option>
+            <option value="scopeone">Scope One</option>
+            <option value="lovedbytheking">Loved by the King</option>
+            <option value="lexendexa">Lexend Exa</option>
+            <option value="notosanswarangciti">Noto Sans Warang Citi</option>
+            <option value="deliusswashcaps">Delius Swash Caps</option>
+            <option value="mako">Mako</option>
+            <option value="museomoderno">MuseoModerno</option>
+            <option value="yuseimagic">Yusei Magic</option>
+            <option value="codystar">Codystar</option>
+            <option value="notosansethiopic">Noto Sans Ethiopic</option>
+            <option value="kufam">Kufam</option>
+            <option value="notosansvai">Noto Sans Vai</option>
+            <option value="germaniaone">Germania One</option>
+            <option value="notosanswancho">Noto Sans Wancho</option>
+            <option value="almendra">Almendra</option>
+            <option value="thegirlnextdoor">The Girl Next Door</option>
+            <option value="lifesavers">Life Savers</option>
+            <option value="portlligatslab">Port Lligat Slab</option>
+            <option value="solway">Solway</option>
+            <option value="muktamahee">Mukta Mahee</option>
+            <option value="charmonman">Charmonman</option>
+            <option value="dynalight">Dynalight</option>
+            <option value="goldman">Goldman</option>
+            <option value="ruthie">Ruthie</option>
+            <option value="glory">Glory</option>
+            <option value="bigshotone">Bigshot One</option>
+            <option value="imprima">Imprima</option>
+            <option value="inspiration">Inspiration</option>
+            <option value="portlligatsans">Port Lligat Sans</option>
+            <option value="leaguescript">League Script</option>
+            <option value="gaegu">Gaegu</option>
+            <option value="justmeagaindownhere">Just Me Again Down Here</option>
+            <option value="vibur">Vibur</option>
+            <option value="deliusunicase">Delius Unicase</option>
+            <option value="tomorrow">Tomorrow</option>
+            <option value="akayatelivigala">Akaya Telivigala</option>
+            <option value="amarante">Amarante</option>
+            <option value="chango">Chango</option>
+            <option value="cherryswash">Cherry Swash</option>
+            <option value="mountainsofchristmas">Mountains of Christmas</option>
+            <option value="carroisgothicsc">Carrois Gothic SC</option>
+            <option value="notocoloremoji">Noto Color Emoji</option>
+            <option value="slackey">Slackey</option>
+            <option value="baloobhaina2">Baloo Bhaina 2</option>
+            <option value="jomhuria">Jomhuria</option>
+            <option value="notoserifmalayalam">Noto Serif Malayalam</option>
+            <option value="kottaone">Kotta One</option>
+            <option value="spicyrice">Spicy Rice</option>
+            <option value="prociono">Prociono</option>
+            <option value="strait">Strait</option>
+            <option value="bellota">Bellota</option>
+            <option value="ephesis">Ephesis</option>
+            <option value="sreekrushnadevaraya">Sree Krushnadevaraya</option>
+            <option value="novaround">Nova Round</option>
+            <option value="alumnisans">Alumni Sans</option>
+            <option value="sonsieone">Sonsie One</option>
+            <option value="cherrycreamsoda">Cherry Cream Soda</option>
+            <option value="stylescript">Style Script</option>
+            <option value="mina">Mina</option>
+            <option value="kleeone">Klee One</option>
+            <option value="novasquare">Nova Square</option>
+            <option value="mysteryquest">Mystery Quest</option>
+            <option value="overlocksc">Overlock SC</option>
+            <option value="cormorantunicase">Cormorant Unicase</option>
+            <option value="gafata">Gafata</option>
+            <option value="andadapro">Andada Pro</option>
+            <option value="yeonsung">Yeon Sung</option>
+            <option value="denkone">Denk One</option>
+            <option value="rowdies">Rowdies</option>
+            <option value="rationale">Rationale</option>
+            <option value="unifrakturcook">UnifrakturCook</option>
+            <option value="librebarcode128">Libre Barcode 128</option>
+            <option value="murecho">Murecho</option>
+            <option value="mplus1">M PLUS 1</option>
+            <option value="zenkurenaido">Zen Kurenaido</option>
+            <option value="wireone">Wire One</option>
+            <option value="songmyung">Song Myung</option>
+            <option value="azeretmono">Azeret Mono</option>
+            <option value="stoke">Stoke</option>
+            <option value="medievalsharp">MedievalSharp</option>
+            <option value="comforterbrush">Comforter Brush</option>
+            <option value="tradewinds">Trade Winds</option>
+            <option value="rubikdirt">Rubik Dirt</option>
+            <option value="codacaption">Coda Caption</option>
+            <option value="frijole">Frijole</option>
+            <option value="figtree">Figtree</option>
+            <option value="sumana">Sumana</option>
+            <option value="zcoolkuaile">ZCOOL KuaiLe</option>
+            <option value="londrinashadow">Londrina Shadow</option>
+            <option value="medulaone">Medula One</option>
+            <option value="bahianita">Bahianita</option>
+            <option value="piedra">Piedra</option>
+            <option value="dekko">Dekko</option>
+            <option value="puritan">Puritan</option>
+            <option value="ramaraja">Ramaraja</option>
+            <option value="stalemate">Stalemate</option>
+            <option value="londrinaoutline">Londrina Outline</option>
+            <option value="kranky">Kranky</option>
+            <option value="msmadi">Ms Madi</option>
+            <option value="markoone">Marko One</option>
+            <option value="kaiseidecol">Kaisei Decol</option>
+            <option value="jollylodger">Jolly Lodger</option>
+            <option value="monofett">Monofett</option>
+            <option value="buda">Buda</option>
+            <option value="hurricane">Hurricane</option>
+            <option value="habibi">Habibi</option>
+            <option value="zenantiquesoft">Zen Antique Soft</option>
+            <option value="cutefont">Cute Font</option>
+            <option value="sulphurpoint">Sulphur Point</option>
+            <option value="kaiseitokumin">Kaisei Tokumin</option>
+            <option value="nokora">Nokora</option>
+            <option value="asar">Asar</option>
+            <option value="shanti">Shanti</option>
+            <option value="farsan">Farsan</option>
+            <option value="unkempt">Unkempt</option>
+            <option value="gemunulibre">Gemunu Libre</option>
+            <option value="macondoswashcaps">Macondo Swash Caps</option>
+            <option value="stylish">Stylish</option>
+            <option value="gotu">Gotu</option>
+            <option value="novaflat">Nova Flat</option>
+            <option value="kantumruy">Kantumruy</option>
+            <option value="loversquarrel">Lovers Quarrel</option>
+            <option value="rosarivo">Rosarivo</option>
+            <option value="rumraisin">Rum Raisin</option>
+            <option value="aboreto">Aboreto</option>
+            <option value="sarina">Sarina</option>
+            <option value="julee">Julee</option>
+            <option value="imfellfrenchcanon">IM Fell French Canon</option>
+            <option value="cantoraone">Cantora One</option>
+            <option value="sahitya">Sahitya</option>
+            <option value="librebarcode39extendedtext">
+              Libre Barcode 39 Extended Text
+            </option>
+            <option value="khmer">Khmer</option>
+            <option value="balootammudu2">Baloo Tammudu 2</option>
+            <option value="gorditas">Gorditas</option>
+            <option value="ribeye">Ribeye</option>
+            <option value="redrose">Red Rose</option>
+            <option value="inriasans">Inria Sans</option>
+            <option value="baloobhaijaan2">Baloo Bhaijaan 2</option>
+            <option value="bigshouldersstencildisplay">
+              Big Shoulders Stencil Display
+            </option>
+            <option value="paprika">Paprika</option>
+            <option value="chicle">Chicle</option>
+            <option value="bizudpmincho">BIZ UDPMincho</option>
+            <option value="piazzolla">Piazzolla</option>
+            <option value="redhatmono">Red Hat Mono</option>
+            <option value="miniver">Miniver</option>
+            <option value="zillaslabhighlight">Zilla Slab Highlight</option>
+            <option value="pottaone">Potta One</option>
+            <option value="engagement">Engagement</option>
+            <option value="intertight">Inter Tight</option>
+            <option value="cagliostro">Cagliostro</option>
+            <option value="ewert">Ewert</option>
+            <option value="redressed">Redressed</option>
+            <option value="croissantone">Croissant One</option>
+            <option value="donegalone">Donegal One</option>
+            <option value="windsong">WindSong</option>
+            <option value="sancreek">Sancreek</option>
+            <option value="fenix">Fenix</option>
+            <option value="moul">Moul</option>
+            <option value="inika">Inika</option>
+            <option value="varta">Varta</option>
+            <option value="averiagruesalibre">Averia Gruesa Libre</option>
+            <option value="manuale">Manuale</option>
+            <option value="iceberg">Iceberg</option>
+            <option value="scheherazadenew">Scheherazade New</option>
+            <option value="ruluko">Ruluko</option>
+            <option value="mplus2">M PLUS 2</option>
+            <option value="akronim">Akronim</option>
+            <option value="griffy">Griffy</option>
+            <option value="angkor">Angkor</option>
+            <option value="fontdinerswanky">Fontdiner Swanky</option>
+            <option value="milonga">Milonga</option>
+            <option value="amiriquran">Amiri Quran</option>
+            <option value="chathura">Chathura</option>
+            <option value="kulimpark">Kulim Park</option>
+            <option value="trainone">Train One</option>
+            <option value="stintultraexpanded">Stint Ultra Expanded</option>
+            <option value="elsieswashcaps">Elsie Swash Caps</option>
+            <option value="qwitchergrypen">Qwitcher Grypen</option>
+            <option value="familjengrotesk">Familjen Grotesk</option>
+            <option value="swankyandmoomoo">Swanky and Moo Moo</option>
+            <option value="orelegaone">Orelega One</option>
+            <option value="kavoon">Kavoon</option>
+            <option value="bigshouldersstenciltext">
+              Big Shoulders Stencil Text
+            </option>
+            <option value="notosansmyanmar">Noto Sans Myanmar</option>
+            <option value="nosifer">Nosifer</option>
+            <option value="hachimarupop">Hachi Maru Pop</option>
+            <option value="bilbo">Bilbo</option>
+            <option value="odormeanchey">Odor Mean Chey</option>
+            <option value="eastseadokdo">East Sea Dokdo</option>
+            <option value="barrio">Barrio</option>
+            <option value="notoserifthai">Noto Serif Thai</option>
+            <option value="textmeone">Text Me One</option>
+            <option value="imfellgreatprimer">IM Fell Great Primer</option>
+            <option value="sura">Sura</option>
+            <option value="newrocker">New Rocker</option>
+            <option value="margarine">Margarine</option>
+            <option value="stalinistone">Stalinist One</option>
+            <option value="bayon">Bayon</option>
+            <option value="simonetta">Simonetta</option>
+            <option value="crushed">Crushed</option>
+            <option value="trispace">Trispace</option>
+            <option value="condiment">Condiment</option>
+            <option value="sirinstencil">Sirin Stencil</option>
+            <option value="bigelowrules">Bigelow Rules</option>
+            <option value="offside">Offside</option>
+            <option value="notosansgeorgian">Noto Sans Georgian</option>
+            <option value="bonanova">Bona Nova</option>
+            <option value="alkalami">Alkalami</option>
+            <option value="hahmlet">Hahmlet</option>
+            <option value="tourney">Tourney</option>
+            <option value="radiocanada">Radio Canada</option>
+            <option value="stick">Stick</option>
+            <option value="vampiroone">Vampiro One</option>
+            <option value="eaglelake">Eagle Lake</option>
+            <option value="kavivanar">Kavivanar</option>
+            <option value="lexendgiga">Lexend Giga</option>
+            <option value="content">Content</option>
+            <option value="anektamil">Anek Tamil</option>
+            <option value="abyssinicasil">Abyssinica SIL</option>
+            <option value="princesssofia">Princess Sofia</option>
+            <option value="tulpenone">Tulpen One</option>
+            <option value="raviprakash">Ravi Prakash</option>
+            <option value="tirodevanagarihindi">Tiro Devanagari Hindi</option>
+            <option value="rampartone">Rampart One</option>
+            <option value="kaiseiopti">Kaisei Opti</option>
+            <option value="autourone">Autour One</option>
+            <option value="librebarcode128text">Libre Barcode 128 Text</option>
+            <option value="underdog">Underdog</option>
+            <option value="meiescript">Meie Script</option>
+            <option value="kumarone">Kumar One</option>
+            <option value="chilanka">Chilanka</option>
+            <option value="ranga">Ranga</option>
+            <option value="dorsa">Dorsa</option>
+            <option value="roadrage">Road Rage</option>
+            <option value="metalmania">Metal Mania</option>
+            <option value="bethellen">Beth Ellen</option>
+            <option value="imfelldwpicasc">IM Fell DW Pica SC</option>
+            <option value="felipa">Felipa</option>
+            <option value="molle">Molle</option>
+            <option value="jotione">Joti One</option>
+            <option value="notoemoji">Noto Emoji</option>
+            <option value="squarepeg">Square Peg</option>
+            <option value="keaniaone">Keania One</option>
+            <option value="montecarlo">MonteCarlo</option>
+            <option value="splinesans">Spline Sans</option>
+            <option value="wellfleet">Wellfleet</option>
+            <option value="montaguslab">Montagu Slab</option>
+            <option value="notosanstamilsupplement">
+              Noto Sans Tamil Supplement
+            </option>
+            <option value="mochiypopone">Mochiy Pop One</option>
+            <option value="rhodiumlibre">Rhodium Libre</option>
+            <option value="modernantiqua">Modern Antiqua</option>
+            <option value="girassol">Girassol</option>
+            <option value="junge">Junge</option>
+            <option value="maidenorange">Maiden Orange</option>
+            <option value="ibmplexsansthailooped">
+              IBM Plex Sans Thai Looped
+            </option>
+            <option value="galdeano">Galdeano</option>
+            <option value="lindenhill">Linden Hill</option>
+            <option value="lexendmega">Lexend Mega</option>
+            <option value="jomolhari">Jomolhari</option>
+            <option value="bahiana">Bahiana</option>
+            <option value="unlock">Unlock</option>
+            <option value="risque">Risque</option>
+            <option value="gowunbatang">Gowun Batang</option>
+            <option value="emblemaone">Emblema One</option>
+            <option value="notosanssymbols">Noto Sans Symbols</option>
+            <option value="fascinateinline">Fascinate Inline</option>
+            <option value="notoseriftelugu">Noto Serif Telugu</option>
+            <option value="zenantique">Zen Antique</option>
+            <option value="mochiypoppone">Mochiy Pop P One</option>
+            <option value="spirax">Spirax</option>
+            <option value="mrssheppards">Mrs Sheppards</option>
+            <option value="srisakdi">Srisakdi</option>
+            <option value="grenze">Grenze</option>
+            <option value="ribeyemarrow">Ribeye Marrow</option>
+            <option value="chenla">Chenla</option>
+            <option value="encodesanssc">Encode Sans SC</option>
+            <option value="yomogi">Yomogi</option>
+            <option value="comforter">Comforter</option>
+            <option value="lakkireddy">Lakki Reddy</option>
+            <option value="poorstory">Poor Story</option>
+            <option value="jacquesfrancoisshadow">
+              Jacques Francois Shadow
+            </option>
+            <option value="kiranghaerang">Kirang Haerang</option>
+            <option value="notoserifgujarati">Noto Serif Gujarati</option>
+            <option value="diplomata">Diplomata</option>
+            <option value="lancelot">Lancelot</option>
+            <option value="birthstone">Birthstone</option>
+            <option value="devonshire">Devonshire</option>
+            <option value="karantina">Karantina</option>
+            <option value="diplomatasc">Diplomata SC</option>
+            <option value="imfellgreatprimersc">IM Fell Great Primer SC</option>
+            <option value="metal">Metal</option>
+            <option value="akayakanadaka">Akaya Kanadaka</option>
+            <option value="peddana">Peddana</option>
+            <option value="romanesco">Romanesco</option>
+            <option value="jimnightshade">Jim Nightshade</option>
+            <option value="plaster">Plaster</option>
+            <option value="hanaleifill">Hanalei Fill</option>
+            <option value="shipporiantique">Shippori Antique</option>
+            <option value="londrinasketch">Londrina Sketch</option>
+            <option value="hinamincho">Hina Mincho</option>
+            <option value="mogra">Mogra</option>
+            <option value="newtegomin">New Tegomin</option>
+            <option value="bakbakone">Bakbak One</option>
+            <option value="revalia">Revalia</option>
+            <option value="notoserifdevanagari">Noto Serif Devanagari</option>
+            <option value="drsugiyama">Dr Sugiyama</option>
+            <option value="galindo">Galindo</option>
+            <option value="oldenburg">Oldenburg</option>
+            <option value="fascinate">Fascinate</option>
+            <option value="novaslim">Nova Slim</option>
+            <option value="mohave">Mohave</option>
+            <option value="yaldevi">Yaldevi</option>
+            <option value="notomusic">Noto Music</option>
+            <option value="bizudgothic">BIZ UDGothic</option>
+            <option value="siemreap">Siemreap</option>
+            <option value="arbutus">Arbutus</option>
+            <option value="gantari">Gantari</option>
+            <option value="almendrasc">Almendra SC</option>
+            <option value="caesardressing">Caesar Dressing</option>
+            <option value="licorice">Licorice</option>
+            <option value="zhimangxing">Zhi Mang Xing</option>
+            <option value="blackandwhitepicture">
+              Black And White Picture
+            </option>
+            <option value="benne">Benne</option>
+            <option value="smythe">Smythe</option>
+            <option value="dangrek">Dangrek</option>
+            <option value="rugeboogie">Ruge Boogie</option>
+            <option value="glassantiqua">Glass Antiqua</option>
+            <option value="jacquesfrancois">Jacques Francois</option>
+            <option value="anybody">Anybody</option>
+            <option value="smokum">Smokum</option>
+            <option value="tirogurmukhi">Tiro Gurmukhi</option>
+            <option value="yujisyuku">Yuji Syuku</option>
+            <option value="gfsneohellenic">GFS Neohellenic</option>
+            <option value="atomicage">Atomic Age</option>
+            <option value="nuosusil">Nuosu SIL</option>
+            <option value="anekbangla">Anek Bangla</option>
+            <option value="nerkoone">Nerko One</option>
+            <option value="librebarcode39extended">
+              Libre Barcode 39 Extended
+            </option>
+            <option value="snippet">Snippet</option>
+            <option value="combo">Combo</option>
+            <option value="vujahdayscript">Vujahday Script</option>
+            <option value="barriecito">Barriecito</option>
+            <option value="zendots">Zen Dots</option>
+            <option value="notoseriftamil">Noto Serif Tamil</option>
+            <option value="arima">Arima</option>
+            <option value="edutasbeginner">Edu TAS Beginner</option>
+            <option value="imfellfrenchcanonsc">IM Fell French Canon SC</option>
+            <option value="splinesansmono">Spline Sans Mono</option>
+            <option value="almendradisplay">Almendra Display</option>
+            <option value="bungeeoutline">Bungee Outline</option>
+            <option value="asset">Asset</option>
+            <option value="birthstonebounce">Birthstone Bounce</option>
+            <option value="longcang">Long Cang</option>
+            <option value="flavors">Flavors</option>
+            <option value="gowundodum">Gowun Dodum</option>
+            <option value="notosansarmenian">Noto Sans Armenian</option>
+            <option value="corinthia">Corinthia</option>
+            <option value="taiheritagepro">Tai Heritage Pro</option>
+            <option value="imbue">Imbue</option>
+            <option value="gupter">Gupter</option>
+            <option value="liujianmaocao">Liu Jian Mao Cao</option>
+            <option value="joan">Joan</option>
+            <option value="novaoval">Nova Oval</option>
+            <option value="missfajardose">Miss Fajardose</option>
+            <option value="anekdevanagari">Anek Devanagari</option>
+            <option value="kdamthmorpro">Kdam Thmor Pro</option>
+            <option value="notosansgothic">Noto Sans Gothic</option>
+            <option value="bungeehairline">Bungee Hairline</option>
+            <option value="sedgwickavedisplay">Sedgwick Ave Display</option>
+            <option value="beaurivage">Beau Rivage</option>
+            <option value="biorhymeexpanded">BioRhyme Expanded</option>
+            <option value="vibes">Vibes</option>
+            <option value="notoserifbalinese">Noto Serif Balinese</option>
+            <option value="moulpali">Moulpali</option>
+            <option value="smooch">Smooch</option>
+            <option value="chelaone">Chela One</option>
+            <option value="seymourone">Seymour One</option>
+            <option value="butcherman">Butcherman</option>
+            <option value="mrbedfort">Mr Bedfort</option>
+            <option value="qahiri">Qahiri</option>
+            <option value="bizudmincho">BIZ UDMincho</option>
+            <option value="gidugu">Gidugu</option>
+            <option value="fuggles">Fuggles</option>
+            <option value="butterflykids">Butterfly Kids</option>
+            <option value="texturina">Texturina</option>
+            <option value="ericaone">Erica One</option>
+            <option value="gluten">Gluten</option>
+            <option value="festive">Festive</option>
+            <option value="bonbon">Bonbon</option>
+            <option value="thenautigal">The Nautigal</option>
+            <option value="tirobangla">Tiro Bangla</option>
+            <option value="notoserifkannada">Noto Serif Kannada</option>
+            <option value="kumaroneoutline">Kumar One Outline</option>
+            <option value="bokor">Bokor</option>
+            <option value="suwannaphum">Suwannaphum</option>
+            <option value="notoserifgeorgian">Noto Serif Georgian</option>
+            <option value="notosanstaiviet">Noto Sans Tai Viet</option>
+            <option value="carattere">Carattere</option>
+            <option value="hanalei">Hanalei</option>
+            <option value="astloch">Astloch</option>
+            <option value="gwendolyn">Gwendolyn</option>
+            <option value="aubrey">Aubrey</option>
+            <option value="snowburstone">Snowburst One</option>
+            <option value="imfelldoublepicasc">IM Fell Double Pica SC</option>
+            <option value="passeroone">Passero One</option>
+            <option value="fruktur">Fruktur</option>
+            <option value="notosansmath">Noto Sans Math</option>
+            <option value="uchen">Uchen</option>
+            <option value="sticknobills">Stick No Bills</option>
+            <option value="waterbrush">Water Brush</option>
+            <option value="trochut">Trochut</option>
+            <option value="praise">Praise</option>
+            <option value="charissil">Charis SIL</option>
+            <option value="shipporiantiqueb1">Shippori Antique B1</option>
+            <option value="mplus1code">M PLUS 1 Code</option>
+            <option value="smoochsans">Smooch Sans</option>
+            <option value="miltonian">Miltonian</option>
+            <option value="notosanssamaritan">Noto Sans Samaritan</option>
+            <option value="lexendtera">Lexend Tera</option>
+            <option value="novascript">Nova Script</option>
+            <option value="synemono">Syne Mono</option>
+            <option value="imperialscript">Imperial Script</option>
+            <option value="bonheurroyale">Bonheur Royale</option>
+            <option value="zentokyozoo">Zen Tokyo Zoo</option>
+            <option value="sunshiney">Sunshiney</option>
+            <option value="notosansjavanese">Noto Sans Javanese</option>
+            <option value="waterfall">Waterfall</option>
+            <option value="neonderthaw">Neonderthaw</option>
+            <option value="lacquer">Lacquer</option>
+            <option value="miltoniantattoo">Miltonian Tattoo</option>
+            <option value="whisper">Whisper</option>
+            <option value="langar">Langar</option>
+            <option value="flowcircular">Flow Circular</option>
+            <option value="suravaram">Suravaram</option>
+            <option value="meaculpa">Mea Culpa</option>
+            <option value="dynapuff">DynaPuff</option>
+            <option value="islandmoments">Island Moments</option>
+            <option value="kaiseiharunoumi">Kaisei HarunoUmi</option>
+            <option value="purplepurse">Purple Purse</option>
+            <option value="sofadione">Sofadi One</option>
+            <option value="gideonroman">Gideon Roman</option>
+            <option value="lavishlyyours">Lavishly Yours</option>
+            <option value="taprom">Taprom</option>
+            <option value="aneklatin">Anek Latin</option>
+            <option value="notosanssymbols2">Noto Sans Symbols 2</option>
+            <option value="notoserifkhmer">Noto Serif Khmer</option>
+            <option value="zenloop">Zen Loop</option>
+            <option value="bigshouldersinlinetext">
+              Big Shoulders Inline Text
+            </option>
+            <option value="federant">Federant</option>
+            <option value="anekgujarati">Anek Gujarati</option>
+            <option value="rubikmicrobe">Rubik Microbe</option>
+            <option value="lexendpeta">Lexend Peta</option>
+            <option value="rubikmarkerhatch">Rubik Marker Hatch</option>
+            <option value="passionsconflict">Passions Conflict</option>
+            <option value="tirotelugu">Tiro Telugu</option>
+            <option value="novacut">Nova Cut</option>
+            <option value="synetactile">Syne Tactile</option>
+            <option value="sevillana">Sevillana</option>
+            <option value="gentiumplus">Gentium Plus</option>
+            <option value="ibmplexsanshebrew">IBM Plex Sans Hebrew</option>
+            <option value="singleday">Single Day</option>
+            <option value="truculenta">Truculenta</option>
+            <option value="luxuriousscript">Luxurious Script</option>
+            <option value="moondance">Moon Dance</option>
+            <option value="notosansoldnortharabian">
+              Noto Sans Old North Arabian
+            </option>
+            <option value="petemoss">Petemoss</option>
+            <option value="eduqldbeginner">Edu QLD Beginner</option>
+            <option value="bigshouldersinlinedisplay">
+              Big Shoulders Inline Display
+            </option>
+            <option value="hubballi">Hubballi</option>
+            <option value="anekgurmukhi">Anek Gurmukhi</option>
+            <option value="ballet">Ballet</option>
+            <option value="xanhmono">Xanh Mono</option>
+            <option value="dhurjati">Dhurjati</option>
+            <option value="geostarfill">Geostar Fill</option>
+            <option value="meowscript">Meow Script</option>
+            <option value="preahvihear">Preahvihear</option>
+            <option value="rubikbeastly">Rubik Beastly</option>
+            <option value="notosansthailooped">Noto Sans Thai Looped</option>
+            <option value="nabla">Nabla</option>
+            <option value="kohsantepheap">Koh Santepheap</option>
+            <option value="tirodevanagarisanskrit">
+              Tiro Devanagari Sanskrit
+            </option>
+            <option value="kenia">Kenia</option>
+            <option value="updock">Updock</option>
+            <option value="yujimai">Yuji Mai</option>
+            <option value="finlandica">Finlandica</option>
+            <option value="gulzar">Gulzar</option>
+            <option value="ibmplexsansdevanagari">
+              IBM Plex Sans Devanagari
+            </option>
+            <option value="eduvicwantbeginner">Edu VIC WA NT Beginner</option>
+            <option value="kantumruypro">Kantumruy Pro</option>
+            <option value="bhutukaexpandedone">BhuTuka Expanded One</option>
+            <option value="tapestry">Tapestry</option>
+            <option value="fleurdeleah">Fleur De Leah</option>
+            <option value="grechenfuemen">Grechen Fuemen</option>
+            <option value="rubikglitch">Rubik Glitch</option>
+            <option value="geostar">Geostar</option>
+            <option value="notosanslao">Noto Sans Lao</option>
+            <option value="alumnisanspinstripe">Alumni Sans Pinstripe</option>
+            <option value="rubikdistressed">Rubik Distressed</option>
+            <option value="yujiboku">Yuji Boku</option>
+            <option value="edunswactfoundation">Edu NSW ACT Foundation</option>
+            <option value="mysoul">My Soul</option>
+            <option value="sendflowers">Send Flowers</option>
+            <option value="warnes">Warnes</option>
+            <option value="notosanskhmer">Noto Sans Khmer</option>
+            <option value="rubikwetpaint">Rubik Wet Paint</option>
+            <option value="notosansegyptianhieroglyphs">
+              Noto Sans Egyptian Hieroglyphs
+            </option>
+            <option value="bungeespice">Bungee Spice</option>
+            <option value="notosansmongolian">Noto Sans Mongolian</option>
+            <option value="cairoplay">Cairo Play</option>
+            <option value="notoserifhk">Noto Serif HK</option>
+            <option value="gentiumbookplus">Gentium Book Plus</option>
+            <option value="areyouserious">Are You Serious</option>
+            <option value="notoserifsinhala">Noto Serif Sinhala</option>
+            <option value="reemkufifun">Reem Kufi Fun</option>
+            <option value="notoserifnyiakengpuachuehmong">
+              Noto Serif Nyiakeng Puachue Hmong
+            </option>
+            <option value="genos">Genos</option>
+            <option value="luxuriousroman">Luxurious Roman</option>
+            <option value="oi">Oi</option>
+            <option value="notorashihebrew">Noto Rashi Hebrew</option>
+            <option value="mingzat">Mingzat</option>
+            <option value="edusabeginner">Edu SA Beginner</option>
+            <option value="alumnisansinlineone">Alumni Sans Inline One</option>
+            <option value="anekkannada">Anek Kannada</option>
+            <option value="lovelight">Love Light</option>
+            <option value="notoserifhebrew">Noto Serif Hebrew</option>
+            <option value="tirodevanagarimarathi">
+              Tiro Devanagari Marathi
+            </option>
+            <option value="splash">Splash</option>
+            <option value="librebarcodeean13text">
+              Libre Barcode EAN13 Text
+            </option>
+            <option value="notosansthaana">Noto Sans Thaana</option>
+            <option value="cherish">Cherish</option>
+            <option value="tirotamil">Tiro Tamil</option>
+            <option value="caramel">Caramel</option>
+            <option value="anekodia">Anek Odia</option>
+            <option value="blakahollow">Blaka Hollow</option>
+            <option value="notosansadlam">Noto Sans Adlam</option>
+            <option value="rubikmaze">Rubik Maze</option>
+            <option value="blaka">Blaka</option>
+            <option value="rubikburned">Rubik Burned</option>
+            <option value="sassyfrass">Sassy Frass</option>
+            <option value="moolahlah">Moo Lah Lah</option>
+            <option value="babylonica">Babylonica</option>
+            <option value="notoserifethiopic">Noto Serif Ethiopic</option>
+            <option value="rubikiso">Rubik Iso</option>
+            <option value="arefruqaaink">Aref Ruqaa Ink</option>
+            <option value="notoseriftibetan">Noto Serif Tibetan</option>
+            <option value="rubikbubbles">Rubik Bubbles</option>
+            <option value="notoserifarmenian">Noto Serif Armenian</option>
+            <option value="redactedscript">Redacted Script</option>
+            <option value="notosanscanadianaboriginal">
+              Noto Sans Canadian Aboriginal
+            </option>
+            <option value="notosansdeseret">Noto Sans Deseret</option>
+            <option value="mpluscodelatin">M PLUS Code Latin</option>
+            <option value="greyqo">Grey Qo</option>
+            <option value="alumnisanscollegiateone">
+              Alumni Sans Collegiate One
+            </option>
+            <option value="estonia">Estonia</option>
+            <option value="explora">Explora</option>
+            <option value="ole">Ole</option>
+            <option value="kings">Kings</option>
+            <option value="notosansbhaiksuki">Noto Sans Bhaiksuki</option>
+            <option value="reemkufiink">Reem Kufi Ink</option>
+            <option value="rubikpuddles">Rubik Puddles</option>
+            <option value="twinklestar">Twinkle Star</option>
+            <option value="notoseriflao">Noto Serif Lao</option>
+            <option value="puppiesplay">Puppies Play</option>
+            <option value="notosanscarian">Noto Sans Carian</option>
+            <option value="notosanstifinagh">Noto Sans Tifinagh</option>
+            <option value="redacted">Redacted</option>
+            <option value="notosanscherokee">Noto Sans Cherokee</option>
+            <option value="ingriddarling">Ingrid Darling</option>
+            <option value="kolkerbrush">Kolker Brush</option>
+            <option value="notosansbalinese">Noto Sans Balinese</option>
+            <option value="notoserifmyanmar">Noto Serif Myanmar</option>
+            <option value="notosansoldturkic">Noto Sans Old Turkic</option>
+            <option value="blakaink">Blaka Ink</option>
+            <option value="flowblock">Flow Block</option>
+            <option value="notosansanatolianhieroglyphs">
+              Noto Sans Anatolian Hieroglyphs
+            </option>
+            <option value="notosanscuneiform">Noto Sans Cuneiform</option>
+            <option value="notosansmeeteimayek">Noto Sans Meetei Mayek</option>
+            <option value="flowrounded">Flow Rounded</option>
+            <option value="notosansavestan">Noto Sans Avestan</option>
+            <option value="notosanscoptic">Noto Sans Coptic</option>
+            <option value="notosanstagalog">Noto Sans Tagalog</option>
+            <option value="notosanssorasompeng">Noto Sans Sora Sompeng</option>
+            <option value="notosansmultani">Noto Sans Multani</option>
+            <option value="notosansbrahmi">Noto Sans Brahmi</option>
+            <option value="notosansbuginese">Noto Sans Buginese</option>
+            <option value="nototraditionalnushu">Noto Traditional Nushu</option>
+            <option value="notosansimperialaramaic">
+              Noto Sans Imperial Aramaic
+            </option>
+            <option value="notosanscham">Noto Sans Cham</option>
+            <option value="notosansadlamunjoined">
+              Noto Sans Adlam Unjoined
+            </option>
+            <option value="notosansbamum">Noto Sans Bamum</option>
+            <option value="notosansgrantha">Noto Sans Grantha</option>
+            <option value="notosansyi">Noto Sans Yi</option>
+            <option value="notosansmarchen">Noto Sans Marchen</option>
+            <option value="notosansmro">Noto Sans Mro</option>
+            <option value="notosansolditalic">Noto Sans Old Italic</option>
+            <option value="notosansosage">Noto Sans Osage</option>
+            <option value="notosansbuhid">Noto Sans Buhid</option>
+            <option value="notosanslineara">Noto Sans Linear A</option>
+            <option value="notoserifgurmukhi">Noto Serif Gurmukhi</option>
+            <option value="notosansogham">Noto Sans Ogham</option>
+            <option value="notosanscypriot">Noto Sans Cypriot</option>
+            <option value="notosanslisu">Noto Sans Lisu</option>
+            <option value="notosanshanunoo">Noto Sans Hanunoo</option>
+            <option value="notosanstaitham">Noto Sans Tai Tham</option>
+            <option value="notosansolchiki">Noto Sans Ol Chiki</option>
+            <option value="notosansoldhungarian">
+              Noto Sans Old Hungarian
+            </option>
+            <option value="notosansbatak">Noto Sans Batak</option>
+            <option value="notoserifgrantha">Noto Serif Grantha</option>
+            <option value="notoserifahom">Noto Serif Ahom</option>
+            <option value="notosansmedefaidrin">Noto Sans Medefaidrin</option>
+            <option value="notoserifyezidi">Noto Serif Yezidi</option>
+            <option value="notosanssundanese">Noto Sans Sundanese</option>
+            <option value="notosanslimbu">Noto Sans Limbu</option>
+            <option value="notosansoldsoutharabian">
+              Noto Sans Old South Arabian
+            </option>
+            <option value="notosansnko">Noto Sans N Ko</option>
+            <option value="notosanspalmyrene">Noto Sans Palmyrene</option>
+            <option value="notoseriftangut">Noto Serif Tangut</option>
+            <option value="notosansmiao">Noto Sans Miao</option>
+            <option value="notosanscaucasianalbanian">
+              Noto Sans Caucasian Albanian
+            </option>
+            <option value="notosansoldpersian">Noto Sans Old Persian</option>
+            <option value="notosansinscriptionalparthian">
+              Noto Sans Inscriptional Parthian
+            </option>
+            <option value="notosansglagolitic">Noto Sans Glagolitic</option>
+            <option value="notosanspaucinhau">Noto Sans Pau Cin Hau</option>
+            <option value="notosansbassavah">Noto Sans Bassa Vah</option>
+            <option value="notosanskaithi">Noto Sans Kaithi</option>
+            <option value="notosanssyriac">Noto Sans Syriac</option>
+            <option value="notosanssylotinagri">Noto Sans Syloti Nagri</option>
+            <option value="notosanschakma">Noto Sans Chakma</option>
+            <option value="notosansinscriptionalpahlavi">
+              Noto Sans Inscriptional Pahlavi
+            </option>
+            <option value="notosansduployan">Noto Sans Duployan</option>
+            <option value="notosansmayannumerals">
+              Noto Sans Mayan Numerals
+            </option>
+            <option value="notoserifdogra">Noto Serif Dogra</option>
+            <option value="notosanspsalterpahlavi">
+              Noto Sans Psalter Pahlavi
+            </option>
+            <option value="notosanspahawhhmong">Noto Sans Pahawh Hmong</option>
+            <option value="notosanshanifirohingya">
+              Noto Sans Hanifi Rohingya
+            </option>
+            <option value="notosansphoenician">Noto Sans Phoenician</option>
+            <option value="notosanskayahli">Noto Sans Kayah Li</option>
+            <option value="notosanszanabazarsquare">
+              Noto Sans Zanabazar Square
+            </option>
+            <option value="notosansindicsiyaqnumbers">
+              Noto Sans Indic Siyaq Numbers
+            </option>
+            <option value="notosanskharoshthi">Noto Sans Kharoshthi</option>
+            <option value="notosansnewa">Noto Sans Newa</option>
+            <option value="notosansnushu">Noto Sans Nushu</option>
+            <option value="notosanssharada">Noto Sans Sharada</option>
+            <option value="notosansphagspa">Noto Sans Phags Pa</option>
+            <option value="notosanstakri">Noto Sans Takri</option>
+            <option value="notosanskhudawadi">Noto Sans Khudawadi</option>
+            <option value="notosansosmanya">Noto Sans Osmanya</option>
+            <option value="notosanshatran">Noto Sans Hatran</option>
+            <option value="notosansugaritic">Noto Sans Ugaritic</option>
+            <option value="notosansnewtailue">Noto Sans New Tai Lue</option>
+            <option value="notosansshavian">Noto Sans Shavian</option>
+            <option value="notosansmasaramgondi">
+              Noto Sans Masaram Gondi
+            </option>
+            <option value="notosansgunjalagondi">
+              Noto Sans Gunjala Gondi
+            </option>
+            <option value="notosanssaurashtra">Noto Sans Saurashtra</option>
+            <option value="notosansoldpermic">Noto Sans Old Permic</option>
+            <option value="notosanskhojki">Noto Sans Khojki</option>
+            <option value="notosanselbasan">Noto Sans Elbasan</option>
+            <option value="notosansmeroitic">Noto Sans Meroitic</option>
+            <option value="notosansrunic">Noto Sans Runic</option>
+            <option value="notosanslydian">Noto Sans Lydian</option>
+            <option value="notosanssiddham">Noto Sans Siddham</option>
+            <option value="notosansrejang">Noto Sans Rejang</option>
+            <option value="notosanstagbanwa">Noto Sans Tagbanwa</option>
+            <option value="notosanssogdian">Noto Sans Sogdian</option>
+            <option value="notosansnabataean">Noto Sans Nabataean</option>
+            <option value="notosanstaile">Noto Sans Tai Le</option>
+            <option value="notosanslycian">Noto Sans Lycian</option>
+            <option value="notosansmahajani">Noto Sans Mahajani</option>
+            <option value="notosansoldsogdian">Noto Sans Old Sogdian</option>
+            <option value="notosanselymaic">Noto Sans Elymaic</option>
+            <option value="notosanslinearb">Noto Sans Linear B</option>
+            <option value="notosansmandaic">Noto Sans Mandaic</option>
+            <option value="notosanstirhuta">Noto Sans Tirhuta</option>
+            <option value="notosanssoyombo">Noto Sans Soyombo</option>
+            <option value="notosansmanichaean">Noto Sans Manichaean</option>
+            <option value="notosanslepcha">Noto Sans Lepcha</option>
+          </strict-select>
+
+          <input type="text" id="background-color-string" />
+
+          <input type="text" id="text-color-string" />
         </div>
       </div>
-
-      <h3>TODO List (in no particular order):</h3>
-
-      <ul>
-        <li>Keep a list of recent fonts and put them up top</li>
-        <li>Save snapshots for comparisons</li>
-        <li>URL parsing to send links with settings</li>
-        <li>Provide a stylesheet with the settings</li>
-        <li>
-          Setup so there is just one handler for the input. (instead of a
-          separate one for the handleColorChange)
-        </li>
-        <li>
-          Figure out the bug in Safari where if you open the color picker and
-          close it without making a change and the click the up/down errors the
-          page freaks out and reloads.
-        </li>
-        <li>
-          Similar problem is if you open the color picker then click on the
-          update arrow before closing it
-        </li>
-        <li>Put stuff in local storage so it's there when you come back</li>
-        <li>See how the color picker works in different browsers</li>
-        <li>Print out a stylesheet with the values</li>
-        <li>Add fonts</li>
-        <li>Put in level to headers</li>
-        <li>Add button to link level on and level 2 headers</li>
-        <li>Make an optional accent color area?</li>
-        <li>Add existing color pallets to click on and setup</li>
-        <li>Add buttons to swap colors up and down</li>
-      </ul>
-      <div id="debug-list"></div>
     </main>
 
     <footer>

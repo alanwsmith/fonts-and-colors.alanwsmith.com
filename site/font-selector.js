@@ -1,5 +1,3 @@
-import fontList from './fonts-popular.json' assert { type: 'JSON' }
-
 class StrictSelect extends HTMLElement {
     constructor() {
         super()
@@ -243,15 +241,29 @@ customElements.define('strict-select', StrictSelect)
 
 const handleFontUpdate = (event) => {
     // document.body.style.color = '#232946'
-    // document.getElementsByTagName('main')[0].style.opacity = '0.7'
 
     const font = event.detail.name
-    const link = document.createElement('link')
-    link.href = `https://fonts.googleapis.com/css2?family=${encodeURI(font)}`
-    link.rel = 'stylesheet'
+    const tmpKey = font.replaceAll(/ /g, '').toLowerCase()
+    console.log(fontUrls[tmpKey]['regular'])
 
-    const head = document.getElementsByTagName('head')[0]
-    head.appendChild(link)
+    const fontFile = new FontFace(font, `url(${fontUrls[tmpKey]['regular']})`)
+    document.fonts.add(fontFile)
+
+    fontFile.load().then(
+        () => {
+            document.body.style.fontFamily = font
+        },
+        (err) => {
+            console.error(err)
+        }
+    )
+
+    // const link = document.createElement('link')
+    // link.href = `https://fonts.googleapis.com/css2?family=${encodeURI(font)}`
+    // link.rel = 'stylesheet'
+
+    // const head = document.getElementsByTagName('head')[0]
+    // head.appendChild(link)
 
     // document.body.style.backgroundColor = '#AA0000'
     // console.log(document.body.style.backgroundColor)
@@ -261,22 +273,22 @@ const handleFontUpdate = (event) => {
     //     header.style.color = '#232946'
     // }
 
-    // was trying to wait until the font was loaded
-    // before making the change, but this is'nt working
-    document.fonts.load(`18px '${font}'`).then(() => {
-        console.log(document.fonts.check("12px 'ASDFASDFMerriweatherx'"))
-        // for (const ken of document.fonts.keys()) {
-        // console.log(ken)
-        // }
-        console.log(`Ready: ${font}`)
-        document.fonts.ready.then(() => {
-            document.body.style.fontFamily = font
-            // setTimeout(() => {
-            // document.body.style.color = '#b8c1ec'
-            // document.getElementsByTagName('main')[0].style.opacity = '1'
-            // }, 100)
-        })
-    })
+    // // was trying to wait until the font was loaded
+    // // before making the change, but this is'nt working
+    // document.fonts.load(`18px '${font}'`).then(() => {
+    //     console.log(document.fonts.check("12px 'ASDFASDFMerriweatherx'"))
+    //     // for (const ken of document.fonts.keys()) {
+    //     // console.log(ken)
+    //     // }
+    //     console.log(`Ready: ${font}`)
+    //     document.fonts.ready.then(() => {
+    //         document.body.style.fontFamily = font
+    //         // setTimeout(() => {
+    //         // document.body.style.color = '#b8c1ec'
+    //         // document.getElementsByTagName('main')[0].style.opacity = '1'
+    //         // }, 100)
+    //     })
+    // })
 }
 
 document.addEventListener('fontupdate', handleFontUpdate)

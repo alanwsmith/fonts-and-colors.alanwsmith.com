@@ -1,3 +1,4 @@
+const fontUrls = JSON.parse(`
 {
   "abeezee": {
     "italic": "http://fonts.gstatic.com/s/abeezee/v22/esDT31xSG-6AGleN2tCklZUCGpG-GQ.ttf",
@@ -8122,4 +8123,4 @@
     "700": "http://fonts.gstatic.com/s/zillaslabhighlight/v17/gNMUW2BrTpK8-inLtBJgMMfbm6uNVDvRxiP0TET4YmVF0Mb6.ttf",
     "regular": "http://fonts.gstatic.com/s/zillaslabhighlight/v17/gNMbW2BrTpK8-inLtBJgMMfbm6uNVDvRxhtIY2DwSXlM.ttf"
   }
-}
+}`)

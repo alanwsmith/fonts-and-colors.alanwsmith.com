@@ -97,7 +97,9 @@
       with fonts during dev 
     <script src="script.js"></script>
     -->
+    <script src="font-list.js"></script>
     <script src="font-selector.js"></script>
+    <script src="color-picker.js"></script>
   </head>
 
   <body>
@@ -124,6 +126,10 @@
         you find it useful too.
       </p>
       <p>-a</p>
+
+      <hsla-picker id="body-color-picker"></hsla-picker>
+      <input type="text" id="body-color-string" />
+
       <div id="color-pickers" class="exempt-from-change">
         <div>
           <input type="color" id="css--background--picker" value="#232946" />
@@ -1720,10 +1726,12 @@
       <h3>TODO List (in no particular order):</h3>
 
       <ul>
-        <li>Keep a list of recent fonts and put them up top</li>
-        <li>Save snapshots for comparisons</li>
-        <li>URL parsing to send links with settings</li>
-        <li>Provide a stylesheet with the settings</li>
+        <li>[ ] - Add font weights and styels</li>
+        <li>[ ] - Keep a list of recent fonts and put them up top</li>
+        <li>[ ] - Save snapshots for comparisons</li>
+        <li>[ ] - URL generation to send links with settings</li>
+        <li>[ ] - Provide a stylesheet with the settings</li>
+        <li>[ ] - Add hex values</li>
         <li>
           Setup so there is just one handler for the input. (instead of a
           separate one for the handleColorChange)

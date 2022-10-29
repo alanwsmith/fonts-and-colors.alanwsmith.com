@@ -14,7 +14,7 @@ for item in data['items']:
         output_data[key][file] = item['files'][file]
 
 with open('refined.json', 'w') as _refined:
-    json.dump(output_data, _refined)
+    json.dump(output_data, _refined, sort_keys=True, indent=2)
 
 
 # print(json.dumps(output_data, sort_keys=True, indent=2))

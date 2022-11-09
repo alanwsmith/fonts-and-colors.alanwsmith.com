@@ -1,0 +1,15 @@
+https://css-tricks.com/how-to-load-fonts-in-a-way-that-fights-fout-and-makes-lighthouse-happy/
+https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleDeclaration/cssText
+https://blog.hubspot.com/website/css-fade-in
+https://stackoverflow.com/questions/4869836/how-to-javascript-fade-in-fade-out-text
+https://stackoverflow.com/q/11679567/102401
+https://codepen.io/ssddayz/pen/zKZaBQ
+https://stackoverflow.com/q/3221561/102401
+https://www.freecodecamp.org/news/how-to-read-json-file-in-javascript/
+https://stackoverflow.com/a/45392971/102401
+https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/hsl
+https://css-tricks.com/newsletter/242-the-absolute-joy-of-hsl/
+https://tsh.io/blog/why-should-you-use-hsl-color-representation-in-css/
+https://stackoverflow.com/questions/35509877/event-listener-with-anonymous-function
+https://stackoverflow.com/questions/256754/how-to-pass-arguments-to-addeventlistener-listener-function
+

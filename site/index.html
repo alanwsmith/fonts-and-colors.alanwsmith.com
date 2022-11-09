@@ -134,6 +134,7 @@
       }
       h5 {
         margin-top: 0.8rem;
+        font-family: 'Roboto', sans-serif;
       }
       a {
         text-decoration: none;
@@ -193,16 +194,27 @@
         grid-template-columns: 350px 200px;
       }
       .accent {
-        background-color: hsla(0, 0%, 76%, 1);
+        background-color: hsla(0, 0%, 62%, 1);
         color: hsla(0, 0%, 26%, 1);
         border-radius: 28px;
         padding-right: 18px;
+        font-weight: bold;
+        padding-top: 1rem;
+        margin-left: 0.7rem;
+        padding-right: 1.2rem;
       }
+      li {
+        margin-bottom: 0.7rem;
+      }
+
       blockquote {
         padding-left: 3rem;
         padding-right: 2.6rem;
         margin-bottom: 1.1rem;
         font-style: italic;
+      }
+      .sidebar {
+        font-family: 'Roboto', sans-serif;
       }
     </style>
     <script src="font-list.js"></script>
@@ -297,7 +309,11 @@
             <div class="accent">
               <ul>
                 <li>Weave the carpet on the right hand side.</li>
-                <li>The cup cracked and spilled its contents.</li>
+                <li>
+                  The cup cracked and
+                  <a href="https://links.alanwsmith.com">spilled its contents</a
+                  >.
+                </li>
               </ul>
             </div>
           </div>
@@ -310,16 +326,20 @@
             <li>[x] - Add header 2 color changer</li>
             <li>[x] - Add link color changer</li>
             <li>[x] - Add text font picker</li>
-            <li>[ ] - Add header font picker</li>
+            <li>[x] - Add header font picker</li>
             <li>[x] - Get arrow keys to work on font pickers</li>
-            <li>[ ] - Allow input of values for colors</li>
-            <li>[ ] - Add some images</li>
+            <li>[x] - Add accent text or area</li>
+            <li>[ ] - Setup text input of color values</li>
             <li>[ ] - Output hex colors</li>
             <li>[ ] - Provide a single output stylesheet</li>
-            <li>[ ] - Add accent text or area</li>
+            <li>
+              [ ] - Add scroll to sidebar so you can adjust the parts you want
+              from wherever
+            </li>
+            <li>[ ] - Add some images</li>
             <li>[ ] - Create multiple example layouts</li>
-            <li>[ ] - Create started color sets</li>
-            <li>[ ] - Add font weights and styels</li>
+            <li>[ ] - Create starter color sets</li>
+            <li>[ ] - Add font weights and styles</li>
             <li>
               [ ] - Add a button to dim the color pickers to help prevent
               overpowering the primary colors
@@ -327,8 +347,6 @@
             <li>[ ] - Keep a list of recent fonts and put them up top</li>
             <li>[ ] - Save snapshots for comparisons</li>
             <li>[ ] - URL generation to send links with settings</li>
-            <li>[ ] - Provide a stylesheet with the settings</li>
-            <li>[ ] - Add hex values</li>
             <li>[ ] - Align font selector under text box</li>
             <li>[ ] - Reimplement swap between body and text, etc...</li>
             <li>[ ] - Add different types of color pickers</li>
@@ -347,7 +365,7 @@
           <!-- prevent prettier for collapsing this space -->
         </div>
 
-        <div>
+        <div class="sidebar">
           <!-- prevent prettier for collapsing this space -->
 
           <h5>Background</h5>
@@ -3442,16 +3460,21 @@
           <h5>Links</h5>
           <hsla-picker id="a-color" h="0" s="78" l="36"></hsla-picker>
 
+          <h5>Blockquote</h5>
+          <hsla-picker id="bq-color" h="0" s="0" l="83"></hsla-picker>
+
           <h5>Background</h5>
-          <input type="text" id="background-color-string" />
+          <input type="text" id="bg-color-string" />
           <h5>Header 1</h5>
-          <input type="text" id="header-color-string" />
+          <input type="text" id="h1-color-string" />
           <h5>Text</h5>
-          <input type="text" id="text-color-string" />
+          <input type="text" id="p-color-string" />
           <h5>Header 2</h5>
           <input type="text" id="h2-color-string" />
           <h5>Links</h5>
-          <input type="text" id="links-color-string" />
+          <input type="text" id="a-color-string" />
+          <h5>Blockquote</h5>
+          <input type="text" id="bq-color-string" />
 
           <!-- Keep prettier for collapsing this space -->
         </div>

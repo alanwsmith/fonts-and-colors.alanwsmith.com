@@ -1,11 +1,11 @@
 const handleBackgroundColorChange = (event) => {
     document.body.style.backgroundColor = event.detail.hsla
-    document.getElementById('background-color-string').value = event.detail.hsla
+    document.getElementById('bg-color-string').value = event.detail.hsla
 }
 
 const handleTextColorChange = (event) => {
     document.body.style.color = event.detail.hsla
-    document.getElementById('text-color-string').value = event.detail.hsla
+    document.getElementById('p-color-string').value = event.detail.hsla
 }
 
 const handleHeaderColorChange = (event) => {
@@ -13,7 +13,7 @@ const handleHeaderColorChange = (event) => {
     for (let i = 0; i < h1s.length; i++) {
         h1s[i].style.color = event.detail.hsla
     }
-    document.getElementById('header-color-string').value = event.detail.hsla
+    document.getElementById('h1-color-string').value = event.detail.hsla
 }
 
 const handleH2ColorChange = (event) => {
@@ -29,7 +29,15 @@ const handleLinksColorChange = (event) => {
     for (let i = 0; i < links.length; i++) {
         links[i].style.color = event.detail.hsla
     }
-    document.getElementById('links-color-string').value = event.detail.hsla
+    document.getElementById('a-color-string').value = event.detail.hsla
+}
+
+const handleBQColorChange = (event) => {
+    const links = document.getElementsByTagName('blockquote')
+    for (let i = 0; i < links.length; i++) {
+        links[i].style.color = event.detail.hsla
+    }
+    document.getElementById('bq-color-string').value = event.detail.hsla
 }
 
 const initialize = () => {
@@ -52,6 +60,10 @@ const initialize = () => {
     document
         .getElementById('a-color')
         .addEventListener('color-changed', handleLinksColorChange)
+
+    document
+        .getElementById('bq-color')
+        .addEventListener('color-changed', handleBQColorChange)
 }
 
 document.addEventListener('DOMContentLoaded', initialize)

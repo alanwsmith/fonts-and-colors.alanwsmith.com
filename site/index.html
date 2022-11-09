@@ -40,8 +40,8 @@
 
     <style>
       body {
-        background-color: #232946;
-        color: #b8c1ec;
+        background-color: hsla(0, 0%, 0%, 1);
+        color: hsla(0, 0%, 83%, 1);
         margin: 0;
         padding: 0;
         min-height: 100vh;
@@ -55,18 +55,19 @@
       h4,
       h5,
       h6 {
-        color: #fffffe;
+        color: hsla(0, 0%, 97%, 1);
         margin: 0;
       }
       h2 {
+        color: hsla(0, 0%, 36%, 1);
         margin-top: 1.8rem;
       }
       h5 {
         margin-top: 0.8rem;
       }
       a {
-        color: #eebbc3;
         text-decoration: none;
+        color: hsla(0, 78%, 36%, 1);
       }
       header {
         padding-top: 1rem;
@@ -1777,7 +1778,8 @@
             l="0"
             a="1"
           ></hsla-picker>
-          <h5 id="label-h1">Header 1</h5>
+
+          <h5>Header 1</h5>
           <hsla-picker
             id="header-color-picker"
             h="0"
@@ -1785,9 +1787,11 @@
             l="97"
             a="1"
           ></hsla-picker>
-          <h5 id="label-text">Text</h5>
+
+          <h5>Text</h5>
           <hsla-picker id="text-color-picker" h="0" s="0" l="83"></hsla-picker>
-          <h5 id="label-h2">Header 2</h5>
+
+          <h5>Header 2</h5>
           <hsla-picker
             id="h2-color-picker"
             h="0"
@@ -1795,14 +1799,26 @@
             l="36"
             a="1"
           ></hsla-picker>
+
+          <h5>Links</h5>
+          <hsla-picker
+            id="links-color-picker"
+            h="0"
+            s="78"
+            l="36"
+            a="1"
+          ></hsla-picker>
+
           <h5>Background</h5>
           <input type="text" id="background-color-string" />
-          <h5 id="label-h1">Header 1</h5>
+          <h5>Header 1</h5>
           <input type="text" id="header-color-string" />
-          <h5 id="label-text">Text</h5>
+          <h5>Text</h5>
           <input type="text" id="text-color-string" />
-          <h5 id="label-h2">Header 2</h5>
+          <h5>Header 2</h5>
           <input type="text" id="h2-color-string" />
+          <h5>Links</h5>
+          <input type="text" id="links-color-string" />
 
           <!-- Keep prettier for collapsing this space -->
         </div>

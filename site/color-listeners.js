@@ -24,6 +24,14 @@ const handleH2ColorChange = (event) => {
     document.getElementById('h2-color-string').value = event.detail.hsla
 }
 
+const handleLinksColorChange = (event) => {
+    const links = document.getElementsByTagName('a')
+    for (let i = 0; i < links.length; i++) {
+        links[i].style.color = event.detail.hsla
+    }
+    document.getElementById('links-color-string').value = event.detail.hsla
+}
+
 const initialize = () => {
     document
         .getElementById('background-color-picker')
@@ -40,6 +48,10 @@ const initialize = () => {
     document
         .getElementById('h2-color-picker')
         .addEventListener('color-changed', handleH2ColorChange)
+
+    document
+        .getElementById('links-color-picker')
+        .addEventListener('color-changed', handleLinksColorChange)
 }
 
 document.addEventListener('DOMContentLoaded', initialize)

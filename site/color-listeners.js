@@ -40,6 +40,22 @@ const handleBQColorChange = (event) => {
     document.getElementById('bq-color-string').value = event.detail.hsla
 }
 
+const handleABColorChange = (event) => {
+    const links = document.getElementsByClassName('accent')
+    for (let i = 0; i < links.length; i++) {
+        links[i].style.backgroundColor = event.detail.hsla
+    }
+    document.getElementById('ab-color-string').value = event.detail.hsla
+}
+
+const handleATColorChange = (event) => {
+    const links = document.getElementsByClassName('accent')
+    for (let i = 0; i < links.length; i++) {
+        links[i].style.color = event.detail.hsla
+    }
+    document.getElementById('at-color-string').value = event.detail.hsla
+}
+
 const initialize = () => {
     document
         .getElementById('bg-color')
@@ -64,6 +80,14 @@ const initialize = () => {
     document
         .getElementById('bq-color')
         .addEventListener('color-changed', handleBQColorChange)
+
+    document
+        .getElementById('ab-color')
+        .addEventListener('color-changed', handleABColorChange)
+
+    document
+        .getElementById('at-color')
+        .addEventListener('color-changed', handleATColorChange)
 }
 
 document.addEventListener('DOMContentLoaded', initialize)

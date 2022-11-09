@@ -39,6 +39,50 @@
     />
 
     <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      * {
+        margin: 0;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        line-height: 1.3;
+        -webkit-font-smoothing: antialiased;
+      }
+      img,
+      picture,
+      video,
+      canvas,
+      svg {
+        display: block;
+        max-width: 100%;
+      }
+      input,
+      button,
+      textarea,
+      select {
+        font: inherit;
+      }
+      p,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        overflow-wrap: break-word;
+      }
+      #root,
+      #__next {
+        isolation: isolate;
+      }
+
       body {
         background-color: hsla(0, 0%, 0%, 1);
         color: hsla(0, 0%, 83%, 1);
@@ -58,9 +102,13 @@
         color: hsla(0, 0%, 97%, 1);
         margin: 0;
       }
+      h1 {
+        margin-bottom: 1.1rem;
+      }
       h2 {
         color: hsla(0, 0%, 36%, 1);
-        margin-top: 1.8rem;
+        margin-top: 2.3rem;
+        margin-bottom: 0.6rem;
       }
       h5 {
         margin-top: 0.8rem;
@@ -69,9 +117,12 @@
         text-decoration: none;
         color: hsla(0, 78%, 36%, 1);
       }
+      p {
+        margin-bottom: 1.1rem;
+      }
       header {
         padding-top: 1rem;
-        padding-bottom: 4px;
+        padding-bottom: 3rem;
         width: 100%;
         max-width: 900px;
         margin: 0 auto;
@@ -112,12 +163,23 @@
       #content {
         padding-right: 2.8rem;
       }
+      .splitter-1 {
+        display: grid;
+        grid-template-columns: 350px 200px;
+      }
+      .accent {
+        background-color: hsla(0, 0%, 76%, 1);
+        color: hsla(0, 0%, 26%, 1);
+        border-radius: 28px;
+        padding-right: 18px;
+      }
+      blockquote {
+        padding-left: 3rem;
+        padding-right: 2.6rem;
+        margin-bottom: 1.1rem;
+        font-style: italic;
+      }
     </style>
-
-    <!-- turning off colors so they don't mess
-      with fonts during dev 
-    <script src="script.js"></script>
-    -->
     <script src="font-list.js"></script>
     <script src="font-selector.js"></script>
     <script src="color-picker.js"></script>
@@ -139,32 +201,27 @@
           </h1>
 
           <p>
-            I'm not good at visualizing how font samples and colors swatches
-            will look on an actual page. It's just not a skill I have.
+            I'm not good at visualizing how font samples and colors chips will
+            look on an actual page. It's just not a skill I have.
           </p>
           <p>
-            I can, however, build web pages. I made this one to experiment with
-            fonts and colors in a way I can wrap my head around. Move the
-            sliders or change the fonts and the page updates in place. No
-            visiualization required.
+            I can, however, build web pages. I made this one to experiment in a
+            way I can wrap my head around. Move the sliders or change the fonts
+            and the page updates in place. No visiualization required.
           </p>
-          <p>
-            I've got a bunch of other stuff to add, but it's in pretty good
-            shape for a first version. I hope you find it useful.
-          </p>
-
+          <p>I hope you find it useful.</p>
           <p>-a</p>
 
           <h2>WORK IN PROGRESS</h2>
           <p>
             The basics are in place. I've got a bunch of other ideas too. The
-            list is further below. Before that, here's some placeholder content
-            to look at for reference.
+            list is further down. Before that, here's some content to look at
+            for reference.
           </p>
 
           <h2>HARVARD SENTENCES</h2>
           <p>
-            What follows is a bunch of
+            What follows are some
             <a href="https://en.wikipedia.org/wiki/Harvard_sentences"
               >Harvard Sentences</a
             >. The they are:
@@ -176,17 +233,48 @@
           </blockquote>
 
           <p>
-            I use them for palceholder text. They feel more natural to me than
-            any of the varous forms of lorem ipsum. Though, I do wish there was
-            more variation in the length. I've got an idea on the list to grab a
-            bunch of lines from
-            <a href="https://www.gutenberg.org/">Project Gutenberg</a>. I'll add
-            those to the
+            I use them for palceholder text. They feel more natural than any of
+            the various forms of lorem ipsum. I wish there was more variation in
+            the length though. I'm going to grab lines from
+            <a href="https://www.gutenberg.org/">Project Gutenberg</a> at some
+            point to address that. I'll add those to the
             <a href="https://examples.alanwsmith.com/"
-              >example placeholder content</a
+              >collection of examples</a
             >
-            I'm putting together.
+            I'm putting together when I do.
           </p>
+          <p>In the mean time, here are those sentences:</p>
+
+          <h2>WORDS, WORDS, WORDS</h2>
+          <p>
+            Rice is often served in round bowls. The box was thrown beside the
+            parked truck. The source of the huge river is the clear spring.
+          </p>
+
+          <div class="splitter-1">
+            <div>
+              <p>
+                The salt breeze came across from the sea. Two blue fish swam in
+                the tank. The colt reared and threw the tall rider. It snowed,
+                rained, and hailed the same morning. Take the winding path to
+                reach the lake.
+              </p>
+              <p>
+                The wide road shimmered in the hot sun. Lift the square stone
+                over the fence. The frosty air passed through the coat.
+              </p>
+              <p>
+                The pencils have all been used. The sofa cushion is red and of
+                light weight. The jacket hung on the back of the wide chair.
+              </p>
+            </div>
+            <div class="accent">
+              <ul>
+                <li>Weave the carpet on the right hand side.</li>
+                <li>The cup cracked and spilled its contents.</li>
+              </ul>
+            </div>
+          </div>
 
           <h2>TODO List (in no particular order):</h2>
           <ul>
@@ -206,6 +294,10 @@
             <li>[ ] - Create multiple example layouts</li>
             <li>[ ] - Create started color sets</li>
             <li>[ ] - Add font weights and styels</li>
+            <li>
+              [ ] - Add a button to dim the color pickers to help prevent
+              overpowering the primary colors
+            </li>
             <li>[ ] - Keep a list of recent fonts and put them up top</li>
             <li>[ ] - Save snapshots for comparisons</li>
             <li>[ ] - URL generation to send links with settings</li>
@@ -225,9 +317,13 @@
             </li>
             <li>[ ] - Add buttons to swap colors up and down</li>
           </ul>
+
+          <!-- prevent prettier for collapsing this space -->
         </div>
 
         <div>
+          <!-- prevent prettier for collapsing this space -->
+
           <h5>Font</h5>
           <strict-select>
             <option value="roboto">Roboto</option>
@@ -1777,7 +1873,6 @@
             l="0"
             a="1"
           ></hsla-picker>
-
           <h5>Header 1</h5>
           <hsla-picker
             id="header-color-picker"
@@ -1786,10 +1881,8 @@
             l="97"
             a="1"
           ></hsla-picker>
-
           <h5>Text</h5>
           <hsla-picker id="text-color-picker" h="0" s="0" l="83"></hsla-picker>
-
           <h5>Header 2</h5>
           <hsla-picker
             id="h2-color-picker"
@@ -1798,7 +1891,6 @@
             l="36"
             a="1"
           ></hsla-picker>
-
           <h5>Links</h5>
           <hsla-picker
             id="links-color-picker"

@@ -67,7 +67,6 @@
       button,
       textarea,
       select {
-        font: inherit;
       }
       p,
       h1,
@@ -324,7 +323,14 @@
         <div>
           <!-- prevent prettier for collapsing this space -->
 
-          <h5>Font</h5>
+          <h5>Background</h5>
+          <hsla-picker id="bg-color" h="0" s="0" l="0"></hsla-picker>
+
+          <h5>Header 1</h5>
+          <hsla-picker id="h1-color" h="0" s="0" l="97"></hsla-picker>
+
+          <h5>Text</h5>
+          <hsla-picker id="p-color" h="0" s="0" l="83"></hsla-picker>
           <strict-select>
             <option value="roboto">Roboto</option>
             <option value="opensans">Open Sans</option>
@@ -1864,15 +1870,6 @@
             <option value="notosanslepcha">Noto Sans Lepcha</option>
           </strict-select>
           <div class="note">(up/down arrows work)</div>
-
-          <h5>Background</h5>
-          <hsla-picker id="bg-color" h="0" s="0" l="0"></hsla-picker>
-
-          <h5>Header 1</h5>
-          <hsla-picker id="h1-color" h="0" s="0" l="97"></hsla-picker>
-
-          <h5>Text</h5>
-          <hsla-picker id="p-color" h="0" s="0" l="83"></hsla-picker>
 
           <h5>Header 2</h5>
           <hsla-picker id="h2-color" h="0" s="0" l="36"></hsla-picker>

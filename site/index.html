@@ -58,6 +58,9 @@
         color: #fffffe;
         margin: 0;
       }
+      h2 {
+        margin-top: 1.8rem;
+      }
       h5 {
         margin-top: 0.8rem;
       }
@@ -97,13 +100,16 @@
       }
       #col-wrapper {
         display: grid;
-        grid-template-columns: 700px 200px;
+        grid-template-columns: 600px 200px;
       }
       strict-select {
         z-index: 10;
       }
       .note {
         font-size: 0.6rem;
+      }
+      #content {
+        padding-right: 2.8rem;
       }
     </style>
 
@@ -126,45 +132,64 @@
     </header>
     <main>
       <div id="col-wrapper">
-        <div>
+        <div id="content">
           <h1 class="exempt-from-change main-header">
             Alan's Font and Color Picker
           </h1>
+
           <p>
-            I am... not good at visualizing how font samples and colors swatches
-            will look on an actual page. That's just not a skill I have.
+            I'm not good at visualizing how font samples and colors swatches
+            will look on an actual page. It's just not a skill I have.
           </p>
           <p>
             I can, however, build web pages. I made this one to experiment with
-            fonts and colors directly. Change the color sliders or pick a
-            differen font and the changes apply straight to the page.
+            fonts and colors in a way I can wrap my head around. Move the
+            sliders or change the fonts and the page updates in place. No
+            visiualization required.
           </p>
           <p>
-            There's a bunch of other stuff on this list to add, but it's in
-            pretty good shape for a first version. I hope you find it useful.
+            I've got a bunch of other stuff to add, but it's in pretty good
+            shape for a first version. I hope you find it useful.
           </p>
 
           <p>-a</p>
 
           <h2>WORK IN PROGRESS</h2>
           <p>
-            The basics are mostly in place, but this the first set of features
-            isn't complete yet. I'll try to keep things that are already working
-            in a good state but may have to bust some things to make progress.
-          </p>
-          <p>
-            TODO: Add note to prototype about display inline being used to
-            prevent perceived bug where if you click on the invisile part of the
-            div that spans the page it doesn't close the selection box
-          </p>
-          <p>
-            TODO: Add note about options being sent in with display none so they
-            can feed the menu without showing up at first.
+            The basics are in place. I've got a bunch of other ideas too. The
+            list is further below. Before that, here's some placeholder content
+            to look at for reference.
           </p>
 
-          <h3>TODO List (in no particular order):</h3>
+          <h2>HARVARD SENTENCES</h2>
+          <p>
+            What follows is a bunch of
+            <a href="https://en.wikipedia.org/wiki/Harvard_sentences"
+              >Harvard Sentences</a
+            >. The they are:
+          </p>
+          <blockquote>
+            a collection of 720 sample phrases, divided into lists of 10, used
+            for standardized testing of Voice over IP, cellular, and other
+            telephone systems.
+          </blockquote>
+
+          <p>
+            I use them for palceholder text. They feel more natural to me than
+            any of the varous forms of lorem ipsum. Though, I do wish there was
+            more variation in the length. I've got an idea on the list to grab a
+            bunch of lines from
+            <a href="https://www.gutenberg.org/">Project Gutenberg</a>. I'll add
+            those to the
+            <a href="https://examples.alanwsmith.com/"
+              >example placeholder content</a
+            >
+            I'm putting together.
+          </p>
+
+          <h2>TODO List (in no particular order):</h2>
           <ul>
-            <li>[ ] - Add content</li>
+            <li>Add some images</li>
             <li>[ ] - Add accent text or area</li>
             <li>[ ] - Create multiple example layouts</li>
             <li>[ ] - Create started color sets</li>
@@ -1747,31 +1772,39 @@
           <h5>Background</h5>
           <hsla-picker
             id="background-color-picker"
-            h="88"
-            s="54"
-            l="9"
+            h="0"
+            s="0"
+            l="0"
             a="1"
-          ></hsla-picker>
-          <h5 id="label-text">Text</h5>
-          <hsla-picker
-            id="text-color-picker"
-            h="100"
-            s="28"
-            l="45"
           ></hsla-picker>
           <h5 id="label-h1">Header 1</h5>
           <hsla-picker
             id="header-color-picker"
-            h="52"
-            s="30"
-            l="60"
+            h="0"
+            s="0"
+            l="97"
             a="1"
           ></hsla-picker>
+          <h5 id="label-text">Text</h5>
+          <hsla-picker id="text-color-picker" h="0" s="0" l="83"></hsla-picker>
+          <h5 id="label-h2">Header 2</h5>
+          <hsla-picker
+            id="h2-color-picker"
+            h="0"
+            s="0"
+            l="36"
+            a="1"
+          ></hsla-picker>
+          <h5>Background</h5>
           <input type="text" id="background-color-string" />
-
-          <input type="text" id="text-color-string" />
-
+          <h5 id="label-h1">Header 1</h5>
           <input type="text" id="header-color-string" />
+          <h5 id="label-text">Text</h5>
+          <input type="text" id="text-color-string" />
+          <h5 id="label-h2">Header 2</h5>
+          <input type="text" id="h2-color-string" />
+
+          <!-- Keep prettier for collapsing this space -->
         </div>
       </div>
     </main>

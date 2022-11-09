@@ -16,6 +16,14 @@ const handleHeaderColorChange = (event) => {
     document.getElementById('header-color-string').value = event.detail.hsla
 }
 
+const handleH2ColorChange = (event) => {
+    const h2s = document.getElementsByTagName('h2')
+    for (let i = 0; i < h2s.length; i++) {
+        h2s[i].style.color = event.detail.hsla
+    }
+    document.getElementById('h2-color-string').value = event.detail.hsla
+}
+
 const initialize = () => {
     document
         .getElementById('background-color-picker')
@@ -28,6 +36,10 @@ const initialize = () => {
     document
         .getElementById('header-color-picker')
         .addEventListener('color-changed', handleHeaderColorChange)
+
+    document
+        .getElementById('h2-color-picker')
+        .addEventListener('color-changed', handleH2ColorChange)
 }
 
 document.addEventListener('DOMContentLoaded', initialize)

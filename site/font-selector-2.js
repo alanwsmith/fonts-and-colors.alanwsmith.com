@@ -2,7 +2,7 @@
 // handle multiple selections so we're just
 // gonna duplicate it.
 
-class StrictSelect extends HTMLElement {
+class StrictSelect2 extends HTMLElement {
     constructor() {
         super()
         this.attachShadow({ mode: 'open' })
@@ -185,7 +185,7 @@ class StrictSelect extends HTMLElement {
             for (let option of this.options) {
                 if (key === option.value) {
                     this.dispatchEvent(
-                        new CustomEvent('fontupdate', {
+                        new CustomEvent('fontupdate2', {
                             detail: {
                                 value: key,
                                 name: option.text,
@@ -241,9 +241,9 @@ class StrictSelect extends HTMLElement {
     }
 }
 
-customElements.define('strict-select', StrictSelect)
+customElements.define('strict-select-2', StrictSelect2)
 
-const handleFontUpdate = (event) => {
+const handleFontUpdate2 = (event) => {
     // document.body.style.color = '#232946'
 
     const font = event.detail.name
@@ -255,7 +255,17 @@ const handleFontUpdate = (event) => {
 
     fontFile.load().then(
         () => {
-            document.body.style.fontFamily = font
+            h1s = document.getElementsByTagName('h1')
+            h2s = document.getElementsByTagName('h2')
+
+            for (let i = 0; i < h1s.length; i++) {
+                h1s[i].style.fontFamily = font
+            }
+            for (let i = 0; i < h2s.length; i++) {
+                h2s[i].style.fontFamily = font
+            }
+
+            // document.body.style.fontFamily = font
         },
         (err) => {
             console.error(err)
@@ -295,4 +305,4 @@ const handleFontUpdate = (event) => {
     // })
 }
 
-document.addEventListener('fontupdate', handleFontUpdate)
+document.addEventListener('fontupdate2', handleFontUpdate2)

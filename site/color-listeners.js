@@ -34,23 +34,23 @@ const handleLinksColorChange = (event) => {
 
 const initialize = () => {
     document
-        .getElementById('background-color-picker')
+        .getElementById('bg-color')
         .addEventListener('color-changed', handleBackgroundColorChange)
 
     document
-        .getElementById('text-color-picker')
+        .getElementById('p-color')
         .addEventListener('color-changed', handleTextColorChange)
 
     document
-        .getElementById('header-color-picker')
+        .getElementById('h1-color')
         .addEventListener('color-changed', handleHeaderColorChange)
 
     document
-        .getElementById('h2-color-picker')
+        .getElementById('h2-color')
         .addEventListener('color-changed', handleH2ColorChange)
 
     document
-        .getElementById('links-color-picker')
+        .getElementById('a-color')
         .addEventListener('color-changed', handleLinksColorChange)
 }
 

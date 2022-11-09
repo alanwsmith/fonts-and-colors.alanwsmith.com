@@ -3,7 +3,7 @@ class StrictSelect extends HTMLElement {
         super()
         this.attachShadow({ mode: 'open' })
         this.defaultOptions = {}
-        this.placeholder = 'Select'
+        this.placeholder = 'Roboto'
         this.options = []
         this.upArrowCheck = ''
         this.tabTimeout = null

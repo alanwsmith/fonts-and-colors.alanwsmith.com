@@ -13,7 +13,7 @@ class StrictSelect extends HTMLElement {
         this.tabTimeout = null
 
         const log = (msg) => {
-            console.log(msg)
+            // console.log(msg)
         }
 
         const handleDocumentClick = (event) => {
@@ -93,7 +93,7 @@ class StrictSelect extends HTMLElement {
         }
 
         const handleSelectInput = (event) => {
-            console.log(event.target.value)
+            // console.log(event.target.value)
             sendEvent(event.target.value)
         }
 
@@ -248,7 +248,7 @@ const handleFontUpdate = (event) => {
 
     const font = event.detail.name
     const tmpKey = font.replaceAll(/ /g, '').toLowerCase()
-    console.log(fontUrls[tmpKey]['regular'])
+    // console.log(fontUrls[tmpKey]['regular'])
 
     const fontFile = new FontFace(font, `url(${fontUrls[tmpKey]['regular']})`)
     document.fonts.add(fontFile)
